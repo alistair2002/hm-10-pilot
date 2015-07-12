@@ -64,6 +64,7 @@ public class DeviceControlActivity extends Activity implements SensorEventListen
     private SeekBar mRed,mGreen,mBlue;
     private String mDeviceName;
     private String mDeviceAddress;
+	private String nmea_sentence;
   //  private ExpandableListView mGattServicesList;
     private BluetoothLeService mBluetoothLeService;
      private boolean mConnected = false;
@@ -262,9 +263,25 @@ public class DeviceControlActivity extends Activity implements SensorEventListen
     private void displayData(String data) {
 
         if (data != null) {
-            mDataField.setText(data);
+			nmea_sentence += data.toString();
 
-            wantedBoat = Float.parseFloat(data.toString());
+			if (nmea_sentence.contains("\r\n")) {
+
+				nmea_sentence = nmea_sentence.replace("$","");
+				nmea_sentence = nmea_sentence.replace("\r\n","");
+				
+                String[] pairs = nmea_sentence.split(",");
+
+                for (int i=0;i<pairs.length;i++)
+				{
+					String[] pair = pairs[i].split(":");
+
+                    if (pair[0].equals("HDM")) {
+                       wantedBoat = Float.parseFloat(pair[1]);
+                    }
+				}
+				nmea_sentence = "";
+			}
         }
 
     }
@@ -355,6 +372,18 @@ public class DeviceControlActivity extends Activity implements SensorEventListen
             mSensorManager.getOrientation(mR, mOrientation);
             float azimuthInRadians = mOrientation[0];
             float azimuthInDegrees = ((float)(-1f * Math.toDegrees(azimuthInRadians))+360)%360;
+
+            if (Math.abs(currentCompass - azimuthInDegrees) > 180) {
+                if (currentCompass > azimuthInDegrees){
+                    currentCompass -= 360;
+                }
+                else {
+                    azimuthInDegrees -= 360;
+                }
+            }
+            // low pass filter of 1/3
+            azimuthInDegrees = (2*currentCompass + azimuthInDegrees)/3;
+
             float boatInDegrees = (azimuthInDegrees + wantedBoat) %360;
             RotateAnimation ra = new RotateAnimation(currentCompass, azimuthInDegrees,
                         Animation.RELATIVE_TO_SELF, 0.5f,
@@ -363,8 +392,8 @@ public class DeviceControlActivity extends Activity implements SensorEventListen
                         Animation.RELATIVE_TO_SELF, 0.5f,
                         Animation.RELATIVE_TO_SELF, 0.5f );
 
-            ra.setDuration(250);
-            rb.setDuration(250);
+            ra.setDuration(100);
+            rb.setDuration(50);
 
             ra.setFillAfter(true);
             rb.setFillAfter(true);

@@ -29,4 +29,4 @@
         android:id="@+id/editText"
         android:layout_gravity="center" />
 </FrameLayout>
-<!-- From: file:/home/jason/StudioProjects/BT4LEDTest/app/src/main/res/layout/actionbar_indeterminate_progress.xml -->
+<!-- From: file:/home/jason/StudioProjects/hm-10-pilot/app/src/main/res/layout/actionbar_indeterminate_progress.xml -->

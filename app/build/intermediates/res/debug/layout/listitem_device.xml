@@ -16,16 +16,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="wrap_content"
+              android:layout_height="match_parent"
     android:layout_margin="10dp">
-
-    <ImageView
-        android:layout_width="360px"
-        android:layout_height="360px"
-        android:layout_gravity="center_horizontal"
-        android:id="@+id/compass"
-        android:src="@drawable/mary_small"
-        android:layout_weight="0.79" />
 
     <TextView android:id="@+id/device_name"
             android:layout_width="match_parent"
@@ -37,4 +29,4 @@
             android:textSize="12dp"/>
 
 
-</LinearLayout><!-- From: file:/home/jason/StudioProjects/BT4LEDTest/app/src/main/res/layout/listitem_device.xml -->
+</LinearLayout><!-- From: file:/home/jason/StudioProjects/hm-10-pilot/app/src/main/res/layout/listitem_device.xml -->

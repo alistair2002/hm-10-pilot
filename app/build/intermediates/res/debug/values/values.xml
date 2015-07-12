@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- From: file:/home/jason/StudioProjects/BT4LEDTest/app/src/main/res/values/strings.xml -->
+    <!-- From: file:/home/jason/StudioProjects/hm-10-pilot/app/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string-array name="roygbiv">
         <item>Red</item>

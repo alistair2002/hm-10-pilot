@@ -27,4 +27,4 @@
           android:orderInCategory="101"
           android:showAsAction="ifRoom|withText"/>
 </menu>
-<!-- From: file:/home/jason/StudioProjects/BT4LEDTest/app/src/main/res/menu/gatt_services.xml -->
+<!-- From: file:/home/jason/StudioProjects/hm-10-pilot/app/src/main/res/menu/gatt_services.xml -->

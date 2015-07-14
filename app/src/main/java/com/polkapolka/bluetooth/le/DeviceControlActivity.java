@@ -42,7 +42,6 @@ import android.view.MenuItem;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -61,7 +60,6 @@ public class DeviceControlActivity extends FragmentActivity
     public static final String EXTRAS_DEVICE_NAME = "DEVICE_NAME";
     public static final String EXTRAS_DEVICE_ADDRESS = "DEVICE_ADDRESS";
     //private TextView isSerial;
-    private TextView mConnectionState;
     //private TextView mDataField;
     private String mDeviceName;
     private String mDeviceAddress;
@@ -85,7 +83,9 @@ public class DeviceControlActivity extends FragmentActivity
     private SensorManager mSensorManager;
     private Sensor mAccelerometer;
     private Sensor mMagnetometer;
-
+	
+	private ScreenSlidePageFragment mDataPage;
+	
     private float[] mLastAccelerometer = new float[3];
     private float[] mLastMagnetometer = new float[3];
     private boolean mLastAccelerometerSet = false;
@@ -189,7 +189,6 @@ public class DeviceControlActivity extends FragmentActivity
 
         // Sets up UI references.
         //((TextView) findViewById(R.id.device_address)).setText(mDeviceAddress);
-         mConnectionState = (TextView) findViewById(R.id.connection_state);
         // is serial present?
         //isSerial = (TextView) findViewById(R.id.isSerial);
    
@@ -265,7 +264,9 @@ public class DeviceControlActivity extends FragmentActivity
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                //mConnectionState.setText(resourceId);
+				if (null != mDataPage) {
+					mDataPage.setConnectionState(resourceId);
+				}
             }
         });
     }
@@ -411,7 +412,7 @@ public class DeviceControlActivity extends FragmentActivity
         @Override
         public Fragment getItem(int position) {
 			if (1 == position)  {
-				return new ScreenSlidePageFragment();
+				return mDataPage = new ScreenSlidePageFragment();
 			} else {
 				return new ScreenSlideDeviceList();
 			}			

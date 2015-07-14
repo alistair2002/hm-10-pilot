@@ -16,11 +16,6 @@
 
 package com.polkapolka.bluetooth.le;
 
-import android.app.Activity;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.BluetoothGattService;
 import android.content.BroadcastReceiver;
@@ -29,39 +24,45 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
-
-import android.widget.SeekBar;
-
 /**
  * For a given BLE device, this Activity provides the user interface to connect, display data,
  * and display GATT services and characteristics supported by the device.  The Activity
  * communicates with {@code BluetoothLeService}, which in turn interacts with the
  * Bluetooth LE API.
  */
-public class DeviceControlActivity extends Activity implements SensorEventListener {
+public class DeviceControlActivity extends FragmentActivity
+        implements ScreenSlidePageFragment.OnFreeboardStringSend, SensorEventListener {
     private final static String TAG = DeviceControlActivity.class.getSimpleName();
 
     public static final String EXTRAS_DEVICE_NAME = "DEVICE_NAME";
     public static final String EXTRAS_DEVICE_ADDRESS = "DEVICE_ADDRESS";
-    private int[] RGBFrame = {0,0,0};
-    private TextView isSerial;
+    //private TextView isSerial;
     private TextView mConnectionState;
-    private TextView mDataField;
-    private SeekBar mRed,mGreen,mBlue;
+    //private TextView mDataField;
     private String mDeviceName;
     private String mDeviceAddress;
 	private String nmea_sentence;
@@ -99,6 +100,17 @@ public class DeviceControlActivity extends Activity implements SensorEventListen
     private final String LIST_NAME = "NAME";
     private final String LIST_UUID = "UUID";
 
+    /**
+     * The pager widget, which handles animation and allows swiping horizontally to access previous
+     * and next wizard steps.
+     */
+    private ViewPager mPager;
+
+    /**
+     * The pager adapter, which provides the pages to the view pager widget.
+     */
+    private PagerAdapter mPagerAdapter;
+	
     // Code to manage Service lifecycle.
     private final ServiceConnection mServiceConnection = new ServiceConnection() {
 
@@ -138,19 +150,19 @@ public class DeviceControlActivity extends Activity implements SensorEventListen
                 mConnected = false;
                 updateConnectionState(R.string.disconnected);
                 invalidateOptionsMenu();
-                clearUI();
+                //clearUI();
             } else if (BluetoothLeService.ACTION_GATT_SERVICES_DISCOVERED.equals(action)) {
                 // Show all the supported services and characteristics on the user interface.
                 displayGattServices(mBluetoothLeService.getSupportedGattServices());
             } else if (BluetoothLeService.ACTION_DATA_AVAILABLE.equals(action)) {
-                displayData(intent.getStringExtra(mBluetoothLeService.EXTRA_DATA));
+                displayData(intent.getStringExtra(BluetoothLeService.EXTRA_DATA));
             }
         }
     };
 
-    private void clearUI() {
-        mDataField.setText(R.string.no_data);
-    }
+    // private void clearUI() {
+    //     mDataField.setText(R.string.no_data);
+    // }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -160,6 +172,11 @@ public class DeviceControlActivity extends Activity implements SensorEventListen
         final Intent intent = getIntent();
         mDeviceName = intent.getStringExtra(EXTRAS_DEVICE_NAME);
         mDeviceAddress = intent.getStringExtra(EXTRAS_DEVICE_ADDRESS);
+
+        // Instantiate a ViewPager and a PagerAdapter.
+        mPager = (ViewPager) findViewById(R.id.pager);
+        mPagerAdapter = new ArseSlidePagerAdapter(getSupportFragmentManager());
+        mPager.setAdapter(mPagerAdapter);
 
         // our compass image
         compass_image = (ImageView) findViewById(R.id.compass);
@@ -171,22 +188,15 @@ public class DeviceControlActivity extends Activity implements SensorEventListen
         mMagnetometer =  mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
 
         // Sets up UI references.
-        ((TextView) findViewById(R.id.device_address)).setText(mDeviceAddress);
+        //((TextView) findViewById(R.id.device_address)).setText(mDeviceAddress);
          mConnectionState = (TextView) findViewById(R.id.connection_state);
         // is serial present?
-        isSerial = (TextView) findViewById(R.id.isSerial);
+        //isSerial = (TextView) findViewById(R.id.isSerial);
    
-        mDataField = (TextView) findViewById(R.id.data_value);
-        mRed = (SeekBar) findViewById(R.id.seekRed);
-        //mGreen = (SeekBar) findViewById(R.id.seekGreen);
-        //mBlue = (SeekBar) findViewById(R.id.seekBlue);
-
-        readSeek(mRed,0);
-        //readSeek(mGreen,1);
-        //readSeek(mBlue,2);
+        //mDataField = (TextView) findViewById(R.id.data_value);
      
-        getActionBar().setTitle(mDeviceName);
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+        // getActionBar().setTitle(mDeviceName);
+        // getActionBar().setDisplayHomeAsUpEnabled(true);
         Intent gattServiceIntent = new Intent(this, BluetoothLeService.class);
         bindService(gattServiceIntent, mServiceConnection, BIND_AUTO_CREATE);
     }
@@ -201,7 +211,7 @@ public class DeviceControlActivity extends Activity implements SensorEventListen
         }
 
         // for the system's orientation sensor registered listeners
-        mSensorManager.registerListener(this, mAccelerometer,SensorManager.SENSOR_DELAY_NORMAL);
+        mSensorManager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_NORMAL);
         mSensorManager.registerListener(this, mMagnetometer, SensorManager.SENSOR_DELAY_NORMAL);
     }
 
@@ -255,15 +265,16 @@ public class DeviceControlActivity extends Activity implements SensorEventListen
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                mConnectionState.setText(resourceId);
+                //mConnectionState.setText(resourceId);
             }
         });
     }
 
     private void displayData(String data) {
 
-        if (data != null) {
-			nmea_sentence += data.toString();
+        nmea_sentence += data;
+
+        if (!nmea_sentence.isEmpty()) {
 
 			if (nmea_sentence.contains("\r\n")) {
 
@@ -272,14 +283,13 @@ public class DeviceControlActivity extends Activity implements SensorEventListen
 				
                 String[] pairs = nmea_sentence.split(",");
 
-                for (int i=0;i<pairs.length;i++)
-				{
-					String[] pair = pairs[i].split(":");
+                for (String pair1 : pairs) {
+                    String[] pair = pair1.split(":");
 
                     if (pair[0].equals("HDM")) {
-                       wantedBoat = Float.parseFloat(pair[1]);
+                        wantedBoat = Float.parseFloat(pair[1]);
                     }
-				}
+                }
 				nmea_sentence = "";
 			}
         }
@@ -292,20 +302,20 @@ public class DeviceControlActivity extends Activity implements SensorEventListen
     // on the UI.
     private void displayGattServices(List<BluetoothGattService> gattServices) {
         if (gattServices == null) return;
-        String uuid = null;
+        String uuid;
         String unknownServiceString = getResources().getString(R.string.unknown_service);
-        ArrayList<HashMap<String, String>> gattServiceData = new ArrayList<HashMap<String, String>>();
+        ArrayList<HashMap<String, String>> gattServiceData = new ArrayList<>();
 
  
         // Loops through available GATT Services.
         for (BluetoothGattService gattService : gattServices) {
-            HashMap<String, String> currentServiceData = new HashMap<String, String>();
+            HashMap<String, String> currentServiceData = new HashMap<>();
             uuid = gattService.getUuid().toString();
             currentServiceData.put(
                     LIST_NAME, SampleGattAttributes.lookup(uuid, unknownServiceString));
             
             // If the service exists for HM 10 Serial, say so.
-            if(SampleGattAttributes.lookup(uuid, unknownServiceString) == "HM 10 Serial") { isSerial.setText("HM-10 :-)"); } else {  isSerial.setText("Not HM-10 ;-("); }
+			//            if(SampleGattAttributes.lookup(uuid, unknownServiceString) == "HM 10 Serial") { isSerial.setText("HM-10 :-)"); } else {  isSerial.setText("Not HM-10 ;-("); }
             currentServiceData.put(LIST_UUID, uuid);
             gattServiceData.add(currentServiceData);
 
@@ -324,37 +334,15 @@ public class DeviceControlActivity extends Activity implements SensorEventListen
         intentFilter.addAction(BluetoothLeService.ACTION_DATA_AVAILABLE);
         return intentFilter;
     }
-    
-    private void readSeek(SeekBar seekBar,final int pos) {
-        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener(){ 
-        	@Override 
-        	   public void onProgressChanged(SeekBar seekBar, int progress, 
-        	     boolean fromUser) { 
-        			RGBFrame[pos]=progress;
-        		} 
 
-        	   @Override 
-        	   public void onStartTrackingTouch(SeekBar seekBar) { 
-        	    // TODO Auto-generated method stub 
-        	   } 
-
-        	   @Override 
-        	   public void onStopTrackingTouch(SeekBar seekBar) { 
-        	    // TODO Auto-generated method stub 
-              		makeChange();
-        	   } 
-        });
-    }
-    // on change of bars write char 
-    private void makeChange() {
-    	 String str = RGBFrame[0] + "," + RGBFrame[1] + "," + RGBFrame[2] + "\n";
-         Log.d(TAG, "Sending result=" + str);
-		 final byte[] tx = str.getBytes();
-		 if(mConnected) {
-		    characteristicTX.setValue(tx);
-			mBluetoothLeService.writeCharacteristic(characteristicTX);
-			mBluetoothLeService.setCharacteristicNotification(characteristicRX,true);
-		 }
+    @Override
+    public void onFreeboardString(String freeboardSentence) {
+        final byte[] tx = freeboardSentence.getBytes();
+        if(mConnected) {
+            characteristicTX.setValue(tx);
+            mBluetoothLeService.writeCharacteristic(characteristicTX);
+            mBluetoothLeService.setCharacteristicNotification(characteristicRX,true);
+        }
     }
 
     @Override
@@ -368,8 +356,8 @@ public class DeviceControlActivity extends Activity implements SensorEventListen
             mLastMagnetometerSet = true;
         }
         if (mLastAccelerometerSet && mLastMagnetometerSet) {
-            mSensorManager.getRotationMatrix(mR, null, mLastAccelerometer, mLastMagnetometer);
-            mSensorManager.getOrientation(mR, mOrientation);
+            SensorManager.getRotationMatrix(mR, null, mLastAccelerometer, mLastMagnetometer);
+            SensorManager.getOrientation(mR, mOrientation);
             float azimuthInRadians = mOrientation[0];
             float azimuthInDegrees = ((float)(-1f * Math.toDegrees(azimuthInRadians))+360)%360;
 
@@ -411,4 +399,27 @@ public class DeviceControlActivity extends Activity implements SensorEventListen
         // not in use
     }
 
+    /**
+     * A simple pager adapter that represents 5 ScreenSlidePageFragment objects, in
+     * sequence.
+     */
+    private class ArseSlidePagerAdapter extends FragmentStatePagerAdapter {
+        public ArseSlidePagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+			if (1 == position)  {
+				return new ScreenSlidePageFragment();
+			} else {
+				return new ScreenSlideDeviceList();
+			}			
+        }
+
+        @Override
+        public int getCount() {
+            return 2;
+        }
+    }
 }

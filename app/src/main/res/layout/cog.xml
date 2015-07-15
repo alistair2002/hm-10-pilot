@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:alpha="100"
+    android:fillViewport="false">
+
+    <LinearLayout android:orientation="vertical"
+        android:layout_gravity="bottom"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        android:weightSum="1">
+
+        <TextView android:id="@+id/cog"
+            android:text="0"
+            android:textSize="200dp"
+            android:textColor="#ff27ff14"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:editable="true"
+            android:focusable="true" />
+
+    </LinearLayout>
+
+</ScrollView>

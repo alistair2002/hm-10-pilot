@@ -54,7 +54,7 @@ import java.util.UUID;
  * Bluetooth LE API.
  */
 public class DeviceControlActivity extends FragmentActivity
-        implements ScreenSlidePageFragment.OnFreeboardStringSend, SensorEventListener {
+        implements ScreenSlideCompass.OnFreeboardStringSend, SensorEventListener {
     private final static String TAG = DeviceControlActivity.class.getSimpleName();
 
     public static final String EXTRAS_DEVICE_NAME = "DEVICE_NAME";
@@ -84,7 +84,9 @@ public class DeviceControlActivity extends FragmentActivity
     private Sensor mAccelerometer;
     private Sensor mMagnetometer;
 	
-	private ScreenSlidePageFragment mDataPage;
+	private ScreenSlideCompass mCompassSlide;
+    private ScreenSlideRudder  mRudderSlide;
+    private ScreenSlideCOG     mCOGSlide;
 	
     private float[] mLastAccelerometer = new float[3];
     private float[] mLastMagnetometer = new float[3];
@@ -264,8 +266,8 @@ public class DeviceControlActivity extends FragmentActivity
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-				if (null != mDataPage) {
-					mDataPage.setConnectionState(resourceId);
+				if (null != mCompassSlide) {
+					mCompassSlide.setConnectionState(resourceId);
 				}
             }
         });
@@ -289,6 +291,10 @@ public class DeviceControlActivity extends FragmentActivity
 
                     if (pair[0].equals("HDM")) {
                         wantedBoat = Float.parseFloat(pair[1]);
+                        if (null != mCompassSlide)
+                        {
+                            mCompassSlide.setBearing((int) wantedBoat);
+                        }
                     }
                 }
 				nmea_sentence = "";
@@ -411,16 +417,19 @@ public class DeviceControlActivity extends FragmentActivity
 
         @Override
         public Fragment getItem(int position) {
-			if (1 == position)  {
-				return mDataPage = new ScreenSlidePageFragment();
-			} else {
-				return new ScreenSlideDeviceList();
-			}			
+            switch (position) {
+                case 1:
+                    return mCompassSlide = new ScreenSlideCompass();
+                case 2:
+                    return mRudderSlide = new ScreenSlideRudder();
+                default:
+                    return mCOGSlide = new ScreenSlideCOG();
+            }
         }
 
         @Override
         public int getCount() {
-            return 2;
+            return 3;
         }
     }
 }

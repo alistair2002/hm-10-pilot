@@ -135,27 +135,27 @@ containing a value of this type.
         public static final int atalanta_brochure5=0x7f020002;
         public static final int atalanta_brocure1=0x7f020003;
         public static final int atalata_brochure2=0x7f020004;
-        public static final int c_rose=0x7f020005;
-        public static final int corsair_compass_rose=0x7f020006;
-        public static final int mary_small=0x7f020007;
+        public static final int corsair_compass_rose=0x7f020005;
+        public static final int mary_small=0x7f020006;
     }
     public static final class id {
         public static final int bearing=0x7f0b0002;
+        public static final int bearing_edit=0x7f0b0001;
         public static final int boat=0x7f0b0006;
-        public static final int cog=0x7f0b0004;
+        public static final int cog=0x7f0b0003;
         public static final int compass=0x7f0b0005;
-        public static final int connection_state=0x7f0b0001;
+        public static final int connection_state=0x7f0b0004;
         public static final int device_address=0x7f0b0008;
         public static final int device_name=0x7f0b0009;
         public static final int editText=0x7f0b0000;
-        public static final int menu_connect=0x7f0b000c;
-        public static final int menu_disconnect=0x7f0b000d;
-        public static final int menu_refresh=0x7f0b000b;
-        public static final int menu_scan=0x7f0b000e;
-        public static final int menu_stop=0x7f0b000f;
+        public static final int menu_connect=0x7f0b000d;
+        public static final int menu_disconnect=0x7f0b000e;
+        public static final int menu_refresh=0x7f0b000c;
+        public static final int menu_scan=0x7f0b000f;
+        public static final int menu_stop=0x7f0b0010;
         public static final int pager=0x7f0b0007;
-        public static final int rudder=0x7f0b000a;
-        public static final int seekRed=0x7f0b0003;
+        public static final int rudder=0x7f0b000b;
+        public static final int rudder_edit=0x7f0b000a;
     }
     public static final class layout {
         public static final int actionbar_indeterminate_progress=0x7f040000;
@@ -175,8 +175,10 @@ containing a value of this type.
         public static final int atalanta_brochure4=0x7f030001;
         public static final int atalanta_brochure5=0x7f030002;
         public static final int compass=0x7f030003;
-        public static final int ic_launcher=0x7f030004;
-        public static final int mary=0x7f030005;
+        public static final int corsair_compass_rose=0x7f030004;
+        public static final int ic_launcher=0x7f030005;
+        public static final int mary=0x7f030006;
+        public static final int mary_small=0x7f030007;
     }
     public static final class string {
         public static final int app_name=0x7f080000;

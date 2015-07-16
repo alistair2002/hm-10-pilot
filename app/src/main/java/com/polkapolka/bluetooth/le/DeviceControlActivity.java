@@ -42,6 +42,7 @@ import android.view.MenuItem;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -54,7 +55,9 @@ import java.util.UUID;
  * Bluetooth LE API.
  */
 public class DeviceControlActivity extends FragmentActivity
-        implements ScreenSlideCompass.OnFreeboardStringSend, SensorEventListener {
+        implements ScreenSlideCompass.OnFreeboardStringSend,
+        ScreenSlideRudder.OnFreeboardStringSend,
+        SensorEventListener {
     private final static String TAG = DeviceControlActivity.class.getSimpleName();
 
     public static final String EXTRAS_DEVICE_NAME = "DEVICE_NAME";
@@ -87,6 +90,8 @@ public class DeviceControlActivity extends FragmentActivity
 	private ScreenSlideCompass mCompassSlide;
     private ScreenSlideRudder  mRudderSlide;
     private ScreenSlideCOG     mCOGSlide;
+
+    private TextView mConnectionState;
 	
     private float[] mLastAccelerometer = new float[3];
     private float[] mLastMagnetometer = new float[3];
@@ -162,6 +167,10 @@ public class DeviceControlActivity extends FragmentActivity
         }
     };
 
+    public void setConnectionState(int resourceId)
+    {
+        mConnectionState.setText(resourceId);
+    }
     // private void clearUI() {
     //     mDataField.setText(R.string.no_data);
     // }
@@ -180,6 +189,7 @@ public class DeviceControlActivity extends FragmentActivity
         mPagerAdapter = new ArseSlidePagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(mPagerAdapter);
 
+        mConnectionState = (TextView) findViewById(R.id.connection_state);
         // our compass image
         compass_image = (ImageView) findViewById(R.id.compass);
         boat_image = (ImageView) findViewById(R.id.boat);
@@ -266,9 +276,7 @@ public class DeviceControlActivity extends FragmentActivity
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-				if (null != mCompassSlide) {
-					mCompassSlide.setConnectionState(resourceId);
-				}
+                setConnectionState(resourceId);
             }
         });
     }
@@ -418,9 +426,9 @@ public class DeviceControlActivity extends FragmentActivity
         @Override
         public Fragment getItem(int position) {
             switch (position) {
-                case 1:
+                case 0:
                     return mCompassSlide = new ScreenSlideCompass();
-                case 2:
+                case 1:
                     return mRudderSlide = new ScreenSlideRudder();
                 default:
                     return mCOGSlide = new ScreenSlideCOG();

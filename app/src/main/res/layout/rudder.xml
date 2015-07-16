@@ -12,29 +12,25 @@
         android:layout_margin="10dp"
         android:weightSum="1">
 
-        <TextView   android:id="@+id/connection_state"
-                android:gravity="right"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="@string/disconnected"
-                android:textSize="18sp"
-                android:layout_weight="1.13" />
+        <EditText android:id="@+id/rudder_edit"
+            android:textSize="50dp"
+            android:text="0"
+            android:textColor="#ff09aaff"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:background="@android:color/transparent"
+            android:clickable="true"
+            android:inputType="number|numberSigned"
+            android:imeOptions="actionDone"
+            android:cursorVisible="false"/>
 
         <TextView android:id="@+id/rudder"
             android:text="0"
-            android:textSize="200dp"
+            android:textSize="180dp"
             android:textColor="#ff09aaff"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="right"
-            android:editable="true"
-            android:focusable="true" />
-
-        <SeekBar
-            android:id="@+id/seekRed"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            />
+            android:gravity="center"/>
     </LinearLayout>
 
 </ScrollView>

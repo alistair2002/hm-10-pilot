@@ -12,30 +12,25 @@
         android:layout_margin="10dp"
         android:weightSum="1">
 
-        <TextView   android:id="@+id/connection_state"
-                android:gravity="right"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="@string/disconnected"
-                android:textSize="18sp"
-                android:layout_weight="1.13" />
+        <EditText android:id="@+id/bearing_edit"
+            android:textSize="50dp"
+            android:text="0"
+            android:textColor="#ffff3035"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:background="@android:color/transparent"
+            android:clickable="true"
+            android:inputType="number"
+            android:imeOptions="actionDone"
+            android:cursorVisible="false"/>
 
         <TextView android:id="@+id/bearing"
             android:text="0"
-            android:textSize="200dp"
+            android:textSize="180dp"
             android:textColor="#ffff3035"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="right"
-            android:editable="true"
-            android:elegantTextHeight="false"
-            android:focusable="true" />
-
-        <SeekBar
-            android:id="@+id/seekRed"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            />
+            android:gravity="right"/>
     </LinearLayout>
 
 </ScrollView>

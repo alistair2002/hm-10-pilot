@@ -18,6 +18,8 @@ public class ScreenSlideCOG extends Fragment {
     private final static String TAG = ScreenSlideCOG.class.getSimpleName();
     private TextView textview;
 
+	public void setCOG(int value) { textview.setText(String.valueOf(value)); }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

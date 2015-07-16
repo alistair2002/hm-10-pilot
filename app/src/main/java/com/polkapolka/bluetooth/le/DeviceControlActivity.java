@@ -303,7 +303,21 @@ public class DeviceControlActivity extends FragmentActivity
                         {
                             mCompassSlide.setBearing((int) wantedBoat);
                         }
-                    }
+                    } else if (pair[0].equals("RSA")) {
+                        Float value = Float.parseFloat(pair[1]);
+                        if (null != mRudderSlide)
+                        {
+                            mRudderSlide.setRudder(value.intValue());
+                        }
+					} else if (pair[0].equals("HDW")) {
+                        Float value = Float.parseFloat(pair[1]);
+                        if (null != mCOGSlide)
+                        {
+                            mCOGSlide.setCOG(value.intValue());
+                        }
+					}
+
+					
                 }
 				nmea_sentence = "";
 			}

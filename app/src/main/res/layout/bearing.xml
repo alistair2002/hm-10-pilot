@@ -15,7 +15,7 @@
         <EditText android:id="@+id/bearing_edit"
             android:textSize="50dp"
             android:text="0"
-            android:textColor="#ffff3035"
+            android:textColor="#ffff8e13"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:background="@android:color/transparent"
@@ -27,7 +27,7 @@
         <TextView android:id="@+id/bearing"
             android:text="0"
             android:textSize="180dp"
-            android:textColor="#ffff3035"
+            android:textColor="#ffff8e13"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="right"/>

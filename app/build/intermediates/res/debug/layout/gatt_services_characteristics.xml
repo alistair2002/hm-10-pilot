@@ -45,9 +45,7 @@ limitations under the License.
 		  			android:layout_centerVertical="true"
 		  android:layout_centerHorizontal="true"
 				 android:id="@+id/compass"
-				 android:src="@drawable/corsair_compass_rose"
-		  android:visibility="visible"
-		  android:alpha="50" />
+				 android:src="@drawable/corsair_compass_rose"/>
 	
 	  <ImageView
 		  android:layout_width="wrap_content"

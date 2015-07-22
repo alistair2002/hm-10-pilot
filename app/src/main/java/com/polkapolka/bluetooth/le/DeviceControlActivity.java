@@ -227,7 +227,15 @@ public class DeviceControlActivity extends FragmentActivity
             case R.id.menu_rescan:
                 Intent wakeScan = new Intent (this, DeviceScanActivity.class);
                 startActivity( wakeScan );
-                //setContentView(R.layout.listitem_device);
+                return true;
+            case R.id.bubble_off:
+                onFreeboardString("#OUT:0\r\n");
+                return true;
+            case R.id.bubble_compass:
+                onFreeboardString("#OUT:1\r\n");
+                return true;
+            case R.id.bubble_cog:
+                onFreeboardString("#OUT:2\r\n");
                 return true;
         }
         return super.onOptionsItemSelected(item);

@@ -39,8 +39,8 @@
         android:title="bubble compass"
         android:orderInCategory="3"
         android:showAsAction="always"/>
-    <item android:id="@+id/bubble_rudder"
-        android:title="bubble rudder"
+    <item android:id="@+id/bubble_cog"
+        android:title="bubble COG"
         android:orderInCategory="3"
         android:showAsAction="always"/>
 </menu>

@@ -145,9 +145,9 @@ containing a value of this type.
         public static final int bearing=0x7f0b0003;
         public static final int bearing_edit=0x7f0b0002;
         public static final int boat=0x7f0b0006;
+        public static final int bubble_cog=0x7f0b0015;
         public static final int bubble_compass=0x7f0b0014;
         public static final int bubble_off=0x7f0b0013;
-        public static final int bubble_rudder=0x7f0b0015;
         public static final int cog=0x7f0b0004;
         public static final int compass=0x7f0b0005;
         public static final int compassActivity=0x7f0b0009;

@@ -45,15 +45,15 @@ limitations under the License.
         <activity
             android:name="com.polkapolka.bluetooth.le.DeviceControlActivity"
             android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="com.polkapolka.bluetooth.le.DeviceScanActivity"
-            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name="com.polkapolka.bluetooth.le.DeviceScanActivity"
+            android:screenOrientation="portrait" >
         </activity>
 
         <service

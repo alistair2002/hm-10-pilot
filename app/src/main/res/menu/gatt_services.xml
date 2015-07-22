@@ -15,6 +15,7 @@
 -->
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/menu_refresh"
+          android:title="refresh"
           android:checkable="false"
           android:orderInCategory="1"
           android:showAsAction="ifRoom"/>
@@ -26,4 +27,20 @@
           android:title="@string/menu_disconnect"
           android:orderInCategory="101"
           android:showAsAction="ifRoom|withText"/>
+    <item android:id="@+id/menu_rescan"
+        android:title="rescan"
+        android:orderInCategory="2"
+        android:showAsAction="always"/>
+    <item android:id="@+id/bubble_off"
+        android:title="bubble off"
+        android:orderInCategory="3"
+        android:showAsAction="always"/>
+    <item android:id="@+id/bubble_compass"
+        android:title="bubble compass"
+        android:orderInCategory="3"
+        android:showAsAction="always"/>
+    <item android:id="@+id/bubble_rudder"
+        android:title="bubble rudder"
+        android:orderInCategory="3"
+        android:showAsAction="always"/>
 </menu>

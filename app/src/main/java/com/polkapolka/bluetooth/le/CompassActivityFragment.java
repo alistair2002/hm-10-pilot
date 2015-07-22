@@ -39,8 +39,6 @@ public class CompassActivityFragment extends Fragment
 	// do we need all of these?
 	private float[] mLastAccelerometer = new float[3];
     private float[] mLastMagnetometer = new float[3];
-    private boolean mLastAccelerometerSet = false;
-    private boolean mLastMagnetometerSet = false;
     private float[] mR = new float[9];
     private float[] mOrientation = new float[3];
     //private float mCurrentDegree = 0f;
@@ -91,36 +89,38 @@ public class CompassActivityFragment extends Fragment
     public void onSensorChanged(SensorEvent event) {
 
         if (event.sensor == mAccelerometer) {
-            System.arraycopy(event.values, 0, mLastAccelerometer, 0, event.values.length);
-            mLastAccelerometerSet = true;
+            mLastAccelerometer = event.values;
         } else if (event.sensor == mMagnetometer) {
-            System.arraycopy(event.values, 0, mLastMagnetometer, 0, event.values.length);
-            mLastMagnetometerSet = true;
+            mLastMagnetometer = event.values;
         }
-        if (mLastAccelerometerSet && mLastMagnetometerSet) {
-            SensorManager.getRotationMatrix(mR, null, mLastAccelerometer, mLastMagnetometer);
-            SensorManager.getOrientation(mR, mOrientation);
-            float azimuthInRadians = mOrientation[0];
-            float azimuthInDegrees = ((float)(-1f * Math.toDegrees(azimuthInRadians))+360)%360;
+        if ((null != mLastAccelerometer) && (null != mLastMagnetometer)) {
+            float azimuthInDegrees;
+			boolean success = SensorManager.getRotationMatrix(mR, null, mLastAccelerometer, mLastMagnetometer);
 
-            if (Math.abs(currentCompass - azimuthInDegrees) > 180) {
-                if (currentCompass > azimuthInDegrees){
-                    currentCompass -= 360;
-                }
-                else {
-                    azimuthInDegrees -= 360;
-                }
-            }
+			if (success) {
+				SensorManager.getOrientation(mR, mOrientation);
+				float azimuthInRadians = mOrientation[0];
+				azimuthInDegrees = ((float)(-1f * Math.toDegrees(azimuthInRadians))+360)%360;
+
+				if (Math.abs(currentCompass - azimuthInDegrees) > 180) {
+					if (currentCompass > azimuthInDegrees){
+						currentCompass -= 360;
+					}
+					else {
+						azimuthInDegrees -= 360;
+					}
+				}
+
             // low pass filter of 1/3
             azimuthInDegrees = (2*currentCompass + azimuthInDegrees)/3;
 
             float boatInDegrees = (azimuthInDegrees + wantedBoat) %360;
             RotateAnimation ra = new RotateAnimation(currentCompass, azimuthInDegrees,
-                        Animation.RELATIVE_TO_SELF, 0.5f,
-                        Animation.RELATIVE_TO_SELF, 0.5f );
+													 Animation.RELATIVE_TO_SELF, 0.5f,
+													 Animation.RELATIVE_TO_SELF, 0.5f );
             RotateAnimation rb = new RotateAnimation( currentBoat, boatInDegrees,
-                        Animation.RELATIVE_TO_SELF, 0.5f,
-                        Animation.RELATIVE_TO_SELF, 0.5f );
+													  Animation.RELATIVE_TO_SELF, 0.5f,
+													  Animation.RELATIVE_TO_SELF, 0.5f );
 
             ra.setDuration(100);
             rb.setDuration(50);
@@ -133,6 +133,8 @@ public class CompassActivityFragment extends Fragment
 
             currentCompass = azimuthInDegrees;
             currentBoat = boatInDegrees;
+
+            }
         }
     }
 

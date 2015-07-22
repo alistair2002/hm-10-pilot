@@ -16,44 +16,25 @@ limitations under the License.
 <RelativeLayout  xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
-	android:layout_height="match_parent">
+				 android:layout_height="match_parent">
 
   <!-- whole screen image -->
   <ImageView 	android:layout_width="match_parent"
 			 	android:layout_height="match_parent"
 			 	android:src="@drawable/atalanta_brochure5"
-	  			android:contentDescription="@string/background_image"
-	  			android:scaleType="fitXY"/>
+	  			android:contentDescription="@string/background_image"/>
 
   <!-- whole screen overlay -->
   <LinearLayout android:orientation="vertical"
 	  			android:layout_width="match_parent"
 				android:layout_height="wrap_content">
 
-	  <LinearLayout
+	  <TextView   android:id="@+id/connection_state"
+		  android:gravity="end"
 		  android:layout_width="match_parent"
 		  android:layout_height="wrap_content"
-		  android:orientation="horizontal"
-		  android:layout_marginLeft="10dp"
-		  android:layout_marginRight="10dp"
-		  android:layout_marginTop="10dp">
-
-		  <ImageView
-			  android:layout_width="30dp"
-			  android:layout_height="30dp"
-			  android:id="@+id/imageButton"
-			  android:src="@drawable/nemu_small"
-			  android:onClick="menuImageSelect"
-			  android:clickable="true" />
-
-		  <TextView   android:id="@+id/connection_state"
-			  android:gravity="end"
-			  android:layout_width="match_parent"
-			  android:layout_height="wrap_content"
-			  android:text="@string/disconnected"
-			  android:textSize="18sp" />
-
-	  </LinearLayout>
+		  android:text="@string/disconnected"
+		  android:textSize="18sp" />
 
 	  <fragment
 		  android:layout_width="wrap_content"
@@ -70,4 +51,3 @@ limitations under the License.
 		android:layout_height="match_parent"/>
   </LinearLayout>
 </RelativeLayout>
-<!-- From: file:/home/jason/StudioProjects/hm-10-pilot/app/src/main/res/layout/gatt_services_characteristics.xml -->

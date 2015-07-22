@@ -14,32 +14,54 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <RelativeLayout  xmlns:android="http://schemas.android.com/apk/res/android"
-				 android:layout_width="match_parent"
-				 android:layout_height="match_parent">
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent">
 
   <!-- whole screen image -->
-  <ImageView android:layout_width="match_parent"
-			 android:layout_height="match_parent"
-			 android:src="@drawable/atalanta_brochure5"
-	  android:contentDescription="@string/background_image"/>
+  <ImageView 	android:layout_width="match_parent"
+			 	android:layout_height="match_parent"
+			 	android:src="@drawable/atalanta_brochure5"
+	  			android:contentDescription="@string/background_image"
+	  			android:scaleType="fitXY"/>
 
   <!-- whole screen overlay -->
   <LinearLayout android:orientation="vertical"
 	  			android:layout_width="match_parent"
 				android:layout_height="wrap_content">
 
-	  <TextView   android:id="@+id/connection_state"
-		  android:gravity="end"
+	  <LinearLayout
 		  android:layout_width="match_parent"
 		  android:layout_height="wrap_content"
-		  android:text="@string/disconnected"
-		  android:textSize="18sp" />
+		  android:orientation="horizontal"
+		  android:layout_marginLeft="10dp"
+		  android:layout_marginRight="10dp"
+		  android:layout_marginTop="10dp">
+
+		  <ImageView
+			  android:layout_width="30dp"
+			  android:layout_height="30dp"
+			  android:id="@+id/imageButton"
+			  android:src="@drawable/nemu_small"
+			  android:onClick="menuImageSelect"
+			  android:clickable="true" />
+
+		  <TextView   android:id="@+id/connection_state"
+			  android:gravity="end"
+			  android:layout_width="match_parent"
+			  android:layout_height="wrap_content"
+			  android:text="@string/disconnected"
+			  android:textSize="18sp" />
+
+	  </LinearLayout>
 
 	  <fragment
 		  android:layout_width="wrap_content"
 		  android:layout_height="wrap_content"
 		  android:name="com.polkapolka.bluetooth.le.CompassActivityFragment"
-		  android:id="@+id/compassActivity"/>
+		  android:id="@+id/compassActivity"
+		  tools:layout="@layout/fragment_compass"
+		  android:layout_gravity="center_horizontal" />
 
 	<android.support.v4.view.ViewPager
 		xmlns:android="http://schemas.android.com/apk/res/android"

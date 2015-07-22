@@ -35,6 +35,7 @@ import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -139,6 +140,10 @@ public class DeviceControlActivity extends FragmentActivity
         }
     };
 
+    public void menuImageSelect(View v) {
+        openOptionsMenu();
+    }
+
     public void setConnectionState(int resourceId)
     {
         mConnectionState.setText(resourceId);
@@ -197,9 +202,11 @@ public class DeviceControlActivity extends FragmentActivity
         getMenuInflater().inflate(R.menu.gatt_services, menu);
         if (mConnected) {
             menu.findItem(R.id.menu_connect).setVisible(false);
+            menu.findItem(R.id.menu_rescan).setVisible(false);
             menu.findItem(R.id.menu_disconnect).setVisible(true);
         } else {
             menu.findItem(R.id.menu_connect).setVisible(true);
+            menu.findItem(R.id.menu_rescan).setVisible(true);
             menu.findItem(R.id.menu_disconnect).setVisible(false);
         }
         return true;
@@ -216,6 +223,11 @@ public class DeviceControlActivity extends FragmentActivity
                 return true;
             case android.R.id.home:
                 onBackPressed();
+                return true;
+            case R.id.menu_rescan:
+                Intent wakeScan = new Intent (this, DeviceScanActivity.class);
+                startActivity( wakeScan );
+                //setContentView(R.layout.listitem_device);
                 return true;
         }
         return super.onOptionsItemSelected(item);

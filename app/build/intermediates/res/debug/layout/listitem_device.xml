@@ -1,19 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    android:orientation="vertical"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_margin="10dp"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:layout_height="match_parent">
+
+    <!-- whole screen image -->
+    <ImageView 	android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/atalata_brochure2"
+        android:contentDescription="@string/background_image"
+        android:scaleType="center"
+        android:background="#ffa2c4ff" />
+
+    <LinearLayout android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="20dp">
 
 	<TextView android:id="@+id/device_name"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:textSize="24dp"/>
+              android:textSize="24dp"
+        android:textColor="#ff000000" />
 	<TextView android:id="@+id/device_address"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:textSize="12dp"/>
+              android:textSize="12dp"
+        android:textColor="#F0000000" />
 
-  </LinearLayout>
+    </LinearLayout>
+  </RelativeLayout>
 <!-- From: file:/home/jason/StudioProjects/hm-10-pilot/app/src/main/res/layout/listitem_device.xml -->

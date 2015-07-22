@@ -24,10 +24,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v4.app.Fragment;
@@ -39,9 +35,6 @@ import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.animation.Animation;
-import android.view.animation.RotateAnimation;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -56,8 +49,7 @@ import java.util.UUID;
  */
 public class DeviceControlActivity extends FragmentActivity
         implements ScreenSlideCompass.OnFreeboardStringSend,
-        ScreenSlideRudder.OnFreeboardStringSend,
-        SensorEventListener {
+        ScreenSlideRudder.OnFreeboardStringSend {
     private final static String TAG = DeviceControlActivity.class.getSimpleName();
 
     public static final String EXTRAS_DEVICE_NAME = "DEVICE_NAME";
@@ -67,40 +59,20 @@ public class DeviceControlActivity extends FragmentActivity
     private String mDeviceName;
     private String mDeviceAddress;
 	private String nmea_sentence;
-  //  private ExpandableListView mGattServicesList;
+
+	//  private ExpandableListView mGattServicesList;
     private BluetoothLeService mBluetoothLeService;
-     private boolean mConnected = false;
+	private boolean mConnected = false;
     private BluetoothGattCharacteristic characteristicTX;
     private BluetoothGattCharacteristic characteristicRX;
 
-    // define the display assembly compass picture
-    private ImageView compass_image;
-    private ImageView boat_image;
-
-    // record the compass picture angle turned
-    private float currentCompass = 0f;
-    private float currentBoat = 0f;
-    private float wantedBoat = 0f;
-
-    // device sensor manager
-    private SensorManager mSensorManager;
-    private Sensor mAccelerometer;
-    private Sensor mMagnetometer;
-	
-	private ScreenSlideCompass mCompassSlide;
-    private ScreenSlideRudder  mRudderSlide;
-    private ScreenSlideCOG     mCOGSlide;
+	private ScreenSlideCompass      mCompassSlide;
+    private ScreenSlideRudder       mRudderSlide;
+    private ScreenSlideCOG          mCOGSlide;
+    private CompassActivityFragment compassActivityFragment;
 
     private TextView mConnectionState;
 	
-    private float[] mLastAccelerometer = new float[3];
-    private float[] mLastMagnetometer = new float[3];
-    private boolean mLastAccelerometerSet = false;
-    private boolean mLastMagnetometerSet = false;
-    private float[] mR = new float[9];
-    private float[] mOrientation = new float[3];
-    private float mCurrentDegree = 0f;
-
     public final static UUID HM_RX_TX =
             UUID.fromString(SampleGattAttributes.HM_RX_TX);
 
@@ -183,6 +155,7 @@ public class DeviceControlActivity extends FragmentActivity
         final Intent intent = getIntent();
         mDeviceName = intent.getStringExtra(EXTRAS_DEVICE_NAME);
         mDeviceAddress = intent.getStringExtra(EXTRAS_DEVICE_ADDRESS);
+        android.app.FragmentManager fragmentManager = getFragmentManager();
 
         // Instantiate a ViewPager and a PagerAdapter.
         mPager = (ViewPager) findViewById(R.id.pager);
@@ -190,24 +163,8 @@ public class DeviceControlActivity extends FragmentActivity
         mPager.setAdapter(mPagerAdapter);
 
         mConnectionState = (TextView) findViewById(R.id.connection_state);
-        // our compass image
-        compass_image = (ImageView) findViewById(R.id.compass);
-        boat_image = (ImageView) findViewById(R.id.boat);
+        compassActivityFragment = (CompassActivityFragment) fragmentManager.findFragmentById(R.id.compassActivity);
 
-        // initialize your android device sensor capabilities
-        mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-        mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        mMagnetometer =  mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
-
-        // Sets up UI references.
-        //((TextView) findViewById(R.id.device_address)).setText(mDeviceAddress);
-        // is serial present?
-        //isSerial = (TextView) findViewById(R.id.isSerial);
-   
-        //mDataField = (TextView) findViewById(R.id.data_value);
-     
-        // getActionBar().setTitle(mDeviceName);
-        // getActionBar().setDisplayHomeAsUpEnabled(true);
         Intent gattServiceIntent = new Intent(this, BluetoothLeService.class);
         bindService(gattServiceIntent, mServiceConnection, BIND_AUTO_CREATE);
     }
@@ -220,20 +177,12 @@ public class DeviceControlActivity extends FragmentActivity
             final boolean result = mBluetoothLeService.connect(mDeviceAddress);
             Log.d(TAG, "Connect request result=" + result);
         }
-
-        // for the system's orientation sensor registered listeners
-        mSensorManager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_NORMAL);
-        mSensorManager.registerListener(this, mMagnetometer, SensorManager.SENSOR_DELAY_NORMAL);
-    }
-
+	}
+	
     @Override
     protected void onPause() {
         super.onPause();
         unregisterReceiver(mGattUpdateReceiver);
-
-        // to stop the listener and save battery
-        mSensorManager.unregisterListener(this, mAccelerometer);
-        mSensorManager.unregisterListener(this, mMagnetometer);
     }
 
     @Override
@@ -298,7 +247,11 @@ public class DeviceControlActivity extends FragmentActivity
                     String[] pair = pair1.split(":");
 
                     if (pair[0].equals("HDM")) {
-                        wantedBoat = Float.parseFloat(pair[1]);
+                        float wantedBoat = Float.parseFloat(pair[1]);
+
+                        if (null != compassActivityFragment) {
+                            compassActivityFragment.setWantedBoat(wantedBoat);
+                        }
                         if (null != mCompassSlide)
                         {
                             mCompassSlide.setBearing((int) wantedBoat);
@@ -374,60 +327,6 @@ public class DeviceControlActivity extends FragmentActivity
         }
     }
 
-    @Override
-    public void onSensorChanged(SensorEvent event) {
-
-        if (event.sensor == mAccelerometer) {
-            System.arraycopy(event.values, 0, mLastAccelerometer, 0, event.values.length);
-            mLastAccelerometerSet = true;
-        } else if (event.sensor == mMagnetometer) {
-            System.arraycopy(event.values, 0, mLastMagnetometer, 0, event.values.length);
-            mLastMagnetometerSet = true;
-        }
-        if (mLastAccelerometerSet && mLastMagnetometerSet) {
-            SensorManager.getRotationMatrix(mR, null, mLastAccelerometer, mLastMagnetometer);
-            SensorManager.getOrientation(mR, mOrientation);
-            float azimuthInRadians = mOrientation[0];
-            float azimuthInDegrees = ((float)(-1f * Math.toDegrees(azimuthInRadians))+360)%360;
-
-            if (Math.abs(currentCompass - azimuthInDegrees) > 180) {
-                if (currentCompass > azimuthInDegrees){
-                    currentCompass -= 360;
-                }
-                else {
-                    azimuthInDegrees -= 360;
-                }
-            }
-            // low pass filter of 1/3
-            azimuthInDegrees = (2*currentCompass + azimuthInDegrees)/3;
-
-            float boatInDegrees = (azimuthInDegrees + wantedBoat) %360;
-            RotateAnimation ra = new RotateAnimation(currentCompass, azimuthInDegrees,
-                        Animation.RELATIVE_TO_SELF, 0.5f,
-                        Animation.RELATIVE_TO_SELF, 0.5f );
-            RotateAnimation rb = new RotateAnimation( currentBoat, boatInDegrees,
-                        Animation.RELATIVE_TO_SELF, 0.5f,
-                        Animation.RELATIVE_TO_SELF, 0.5f );
-
-            ra.setDuration(100);
-            rb.setDuration(50);
-
-            ra.setFillAfter(true);
-            rb.setFillAfter(true);
-
-            compass_image.startAnimation(ra);
-            boat_image.startAnimation(rb);
-
-            currentCompass = azimuthInDegrees;
-            currentBoat = boatInDegrees;
-        }
-    }
-
-    @Override
-    public void onAccuracyChanged(Sensor sensor, int accuracy) {
-        // not in use
-    }
-
     /**
      * A simple pager adapter that represents 5 ScreenSlidePageFragment objects, in
      * sequence.
@@ -454,4 +353,5 @@ public class DeviceControlActivity extends FragmentActivity
             return 3;
         }
     }
+
 }

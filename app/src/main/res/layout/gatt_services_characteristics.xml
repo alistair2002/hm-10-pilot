@@ -20,7 +20,8 @@ limitations under the License.
   <!-- whole screen image -->
   <ImageView android:layout_width="match_parent"
 			 android:layout_height="match_parent"
-			 android:src="@drawable/atalanta_brochure5"/>
+			 android:src="@drawable/atalanta_brochure5"
+	  android:contentDescription="@string/background_image"/>
 
   <!-- whole screen overlay -->
   <LinearLayout android:orientation="vertical"
@@ -28,34 +29,17 @@ limitations under the License.
 				android:layout_height="wrap_content">
 
 	  <TextView   android:id="@+id/connection_state"
-		  android:gravity="right"
+		  android:gravity="end"
 		  android:layout_width="match_parent"
 		  android:layout_height="wrap_content"
 		  android:text="@string/disconnected"
 		  android:textSize="18sp" />
 
-	<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-					android:orientation="horizontal"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:layout_gravity="center_horizontal">
-
-	  <ImageView android:layout_width="wrap_content"
-				 android:layout_height="wrap_content"
-		  			android:layout_centerVertical="true"
-		  android:layout_centerHorizontal="true"
-				 android:id="@+id/compass"
-				 android:src="@drawable/corsair_compass_rose"/>
-	
-	  <ImageView
+	  <fragment
 		  android:layout_width="wrap_content"
 		  android:layout_height="wrap_content"
-		  android:id="@+id/boat"
-		  android:src="@drawable/mary_small"
-		  android:layout_centerVertical="true"
-		  android:layout_centerHorizontal="true" />
-
-	</RelativeLayout>
+		  android:name="com.polkapolka.bluetooth.le.CompassActivityFragment"
+		  android:id="@+id/compassActivity"/>
 
 	<android.support.v4.view.ViewPager
 		xmlns:android="http://schemas.android.com/apk/res/android"

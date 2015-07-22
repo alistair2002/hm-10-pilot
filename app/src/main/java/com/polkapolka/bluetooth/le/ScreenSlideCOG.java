@@ -1,7 +1,11 @@
 package com.polkapolka.bluetooth.le;
 
 /**
- * Created by jason on 13/07/15.
+ * This code is inherited from the work of the the freeboard project
+ * http://www.42.co.nz/freeboard/
+ * and the HM10 bluetooth low energy module project
+ * http://jnhuamao.cn/
+ * Please acknowledge its origins if re-using it.  I add that any re-use is done so at your own risk etc..
  */
 
 import android.graphics.Typeface;
@@ -15,7 +19,7 @@ import android.widget.TextView;
 //Widgets used
 
 public class ScreenSlideCOG extends Fragment {
-    private final static String TAG = ScreenSlideCOG.class.getSimpleName();
+    //private final static String TAG = ScreenSlideCOG.class.getSimpleName();
     private TextView textview;
 
 	public void setCOG(int value) { textview.setText(String.valueOf(value)); }

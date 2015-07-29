@@ -12,17 +12,35 @@
         android:layout_margin="10dp"
         android:weightSum="1">
 
-        <EditText android:id="@+id/rudder_edit"
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText android:id="@+id/rudder_edit"
             android:textSize="50dp"
             android:text="0"
+            android:gravity="left"
             android:textColor="#ff09aaff"
             android:layout_height="wrap_content"
-            android:layout_width="match_parent"
+            android:layout_width="280dp"
             android:background="@android:color/transparent"
             android:clickable="true"
             android:inputType="number|numberSigned"
             android:imeOptions="actionDone"
             android:cursorVisible="false"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="rudder"
+                android:id="@+id/textView"
+                android:textColor="#ff09aaff"
+                android:gravity="right" />
+        </LinearLayout>
+
+
 
         <TextView android:id="@+id/rudder"
             android:text="0"

@@ -70,6 +70,7 @@ public class DeviceControlActivity extends FragmentActivity
 	private ScreenSlideCompass      mCompassSlide;
     private ScreenSlideRudder       mRudderSlide;
     private ScreenSlideCOG          mCOGSlide;
+    private ScreenSlideSOG          mSOGSlide;
     private CompassActivityFragment compassActivityFragment;
 
     private TextView mConnectionState;
@@ -237,6 +238,9 @@ public class DeviceControlActivity extends FragmentActivity
             case R.id.bubble_cog:
                 onFreeboardString("#OUT:2\r\n");
                 return true;
+            case R.id.pid_off:
+                onFreeboardString("#OFF:0\r\n");
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -282,13 +286,19 @@ public class DeviceControlActivity extends FragmentActivity
                         {
                             mRudderSlide.setRudder(value.intValue());
                         }
-					} else if (pair[0].equals("HDW")) {
+					} else if (pair[0].equals("SOG")) {
+                        Float value = Float.parseFloat(pair[1]);
+                        if (null != mSOGSlide)
+                        {
+                            mSOGSlide.setSOG(value.intValue());
+                        }
+                    } else if (pair[0].equals("HDW")) {
                         Float value = Float.parseFloat(pair[1]);
                         if (null != mCOGSlide)
                         {
                             mCOGSlide.setCOG(value.intValue());
                         }
-					}
+                    }
 
 					
                 }
@@ -363,14 +373,16 @@ public class DeviceControlActivity extends FragmentActivity
                     return mCompassSlide = new ScreenSlideCompass();
                 case 1:
                     return mRudderSlide = new ScreenSlideRudder();
-                default:
+                case 2:
                     return mCOGSlide = new ScreenSlideCOG();
+                default:
+                    return mSOGSlide = new ScreenSlideSOG();
             }
         }
 
         @Override
         public int getCount() {
-            return 3;
+            return 4; /* this should be a dimention thing not a magic number */
         }
     }
 

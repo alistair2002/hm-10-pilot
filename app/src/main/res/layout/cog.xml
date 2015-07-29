@@ -12,10 +12,39 @@
         android:layout_margin="10dp"
         android:weightSum="1">
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/cog_edit"
+            android:textSize="50dp"
+            android:text="0"
+            android:gravity="left"
+            android:textColor="#ffff8534"
+            android:layout_height="wrap_content"
+            android:layout_width="280dp"
+            android:background="@android:color/transparent"
+            android:clickable="true"
+            android:inputType="number|numberSigned"
+            android:cursorVisible="false" />
+
+        <TextView android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="right|end"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="cog"
+            android:id="@+id/textView2"
+            android:textColor="#ffff8534" />
+
+    </LinearLayout>
+
+
         <TextView android:id="@+id/cog"
             android:text="0"
-            android:textSize="200dp"
-            android:textColor="#ff27ff14"
+            android:textSize="180dp"
+            android:textColor="#ffff8534"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="right"

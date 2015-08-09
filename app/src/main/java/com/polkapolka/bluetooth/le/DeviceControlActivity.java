@@ -50,6 +50,7 @@ import java.util.UUID;
  */
 public class DeviceControlActivity extends FragmentActivity
         implements ScreenSlideCompass.OnFreeboardStringSend,
+        ScreenSlideCOG.OnFreeboardStringSend,
         ScreenSlideRudder.OnFreeboardStringSend {
     private final static String TAG = DeviceControlActivity.class.getSimpleName();
 
@@ -238,6 +239,8 @@ public class DeviceControlActivity extends FragmentActivity
             case R.id.bubble_cog:
                 onFreeboardString("#OUT:2\r\n");
                 return true;
+            case R.id.bubble_amp:
+                onFreeboardString("#OUT:3\r\n");
             case R.id.pid_off:
                 onFreeboardString("#OFF:0\r\n");
                 return true;

@@ -145,6 +145,7 @@ containing a value of this type.
         public static final int bearing=0x7f0b0004;
         public static final int bearing_edit=0x7f0b0002;
         public static final int boat=0x7f0b0008;
+        public static final int bubble_amp=0x7f0b001a;
         public static final int bubble_cog=0x7f0b0019;
         public static final int bubble_compass=0x7f0b0018;
         public static final int bubble_off=0x7f0b0017;
@@ -160,10 +161,10 @@ containing a value of this type.
         public static final int imageButton=0x7f0b0009;
         public static final int menu_connect=0x7f0b0014;
         public static final int menu_disconnect=0x7f0b0015;
-        public static final int menu_refresh=0x7f0b001a;
+        public static final int menu_refresh=0x7f0b001b;
         public static final int menu_rescan=0x7f0b0016;
-        public static final int menu_scan=0x7f0b001b;
-        public static final int menu_stop=0x7f0b001c;
+        public static final int menu_scan=0x7f0b001c;
+        public static final int menu_stop=0x7f0b001d;
         public static final int pager=0x7f0b000c;
         public static final int pid_off=0x7f0b0013;
         public static final int rudder=0x7f0b0011;

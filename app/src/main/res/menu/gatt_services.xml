@@ -42,6 +42,10 @@
         android:title="bubble COG"
         android:orderInCategory="3"
         android:showAsAction="always"/>
+    <item android:id="@+id/bubble_amp"
+        android:title="bubble amp"
+        android:orderInCategory="3"
+        android:showAsAction="always"/>
     <item android:id="@+id/menu_refresh"
         android:title="refresh"
         android:checkable="false"

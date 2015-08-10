@@ -25,6 +25,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -37,6 +38,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+
+import com.getpebble.android.kit.PebbleKit;
+import com.getpebble.android.kit.util.PebbleDictionary;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -53,12 +57,13 @@ public class DeviceControlActivity extends FragmentActivity
         ScreenSlideCOG.OnFreeboardStringSend,
         ScreenSlideRudder.OnFreeboardStringSend {
     private final static String TAG = DeviceControlActivity.class.getSimpleName();
+    private final static UUID PEBBLE_APP_UUID = UUID.fromString("424decad-838a-4ce8-be10-ad5ce75f551a");
 
     public static final String EXTRAS_DEVICE_NAME = "DEVICE_NAME";
     public static final String EXTRAS_DEVICE_ADDRESS = "DEVICE_ADDRESS";
     //private TextView isSerial;
     //private TextView mDataField;
-    private String mDeviceName;
+    //private String mDeviceName;
     private String mDeviceAddress;
 	private String nmea_sentence;
 
@@ -75,24 +80,7 @@ public class DeviceControlActivity extends FragmentActivity
     private CompassActivityFragment compassActivityFragment;
 
     private TextView mConnectionState;
-	
-    public final static UUID HM_RX_TX =
-            UUID.fromString(SampleGattAttributes.HM_RX_TX);
 
-    private final String LIST_NAME = "NAME";
-    private final String LIST_UUID = "UUID";
-
-    /**
-     * The pager widget, which handles animation and allows swiping horizontally to access previous
-     * and next wizard steps.
-     */
-    private ViewPager mPager;
-
-    /**
-     * The pager adapter, which provides the pages to the view pager widget.
-     */
-    private PagerAdapter mPagerAdapter;
-	
     // Code to manage Service lifecycle.
     private final ServiceConnection mServiceConnection = new ServiceConnection() {
 
@@ -160,11 +148,12 @@ public class DeviceControlActivity extends FragmentActivity
         setContentView(R.layout.gatt_services_characteristics);
 
         final Intent intent = getIntent();
-        mDeviceName = intent.getStringExtra(EXTRAS_DEVICE_NAME);
+        //mDeviceName = intent.getStringExtra(EXTRAS_DEVICE_NAME);
         mDeviceAddress = intent.getStringExtra(EXTRAS_DEVICE_ADDRESS);
         android.app.FragmentManager fragmentManager = getFragmentManager();
+        ViewPager mPager;
+        PagerAdapter mPagerAdapter;
 
-        // Instantiate a ViewPager and a PagerAdapter.
         mPager = (ViewPager) findViewById(R.id.pager);
         mPagerAdapter = new ArseSlidePagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(mPagerAdapter);
@@ -174,6 +163,40 @@ public class DeviceControlActivity extends FragmentActivity
 
         Intent gattServiceIntent = new Intent(this, BluetoothLeService.class);
         bindService(gattServiceIntent, mServiceConnection, BIND_AUTO_CREATE);
+
+        final Handler handler = new Handler();
+
+        PebbleKit.registerReceivedDataHandler(this, new PebbleKit.PebbleDataReceiver(PEBBLE_APP_UUID) {
+
+            @Override
+            public void receiveData(final Context context, final int transactionId, final PebbleDictionary watch_event) {
+
+
+                if (null != watch_event.getInteger(0)) // OK it should be a constant but 0 is the key value
+                {
+                    final int key = watch_event.getInteger(0).intValue();
+                    handler.post(new Runnable() {
+                                     public void run() {
+                            /* Update your UI here. */
+                            switch (key)
+                            {
+                                case 1: // key up
+                                    onFreeboardString("#BWR:-10\r\n");
+                                    break;
+                                case 2:
+                                    onFreeboardString("#BWR:10\r\n");
+                                    break;
+                                default:
+                            }
+                        }
+                    });
+                    Log.i(getLocalClassName(), "Received value=" + watch_event.getInteger(0) + " for key: 0");
+                }
+
+                PebbleKit.sendAckToPebble(getApplicationContext(), transactionId);
+            }
+
+        });
     }
 
     @Override
@@ -265,23 +288,33 @@ public class DeviceControlActivity extends FragmentActivity
 
 			if (nmea_sentence.contains("\r\n")) {
 
+                boolean pebbled = PebbleKit.isWatchConnected(getApplicationContext());
+
+                if (!PebbleKit.areAppMessagesSupported(getApplicationContext())) {
+                    pebbled = false;
+                }
 				nmea_sentence = nmea_sentence.replace("$","");
 				nmea_sentence = nmea_sentence.replace("\r\n","");
 				
                 String[] pairs = nmea_sentence.split(",");
 
+                PebbleDictionary watch_data = new PebbleDictionary();
+
                 for (String pair1 : pairs) {
                     String[] pair = pair1.split(":");
 
                     if (pair[0].equals("HDM")) {
-                        float wantedBoat = Float.parseFloat(pair[1]);
+                        Float wantedBoat = Float.parseFloat(pair[1]);
 
+                        if (pebbled) {
+                            watch_data.addInt32(0, wantedBoat.intValue());
+                        }
                         if (null != compassActivityFragment) {
                             compassActivityFragment.setWantedBoat(wantedBoat);
                         }
                         if (null != mCompassSlide)
                         {
-                            mCompassSlide.setBearing((int) wantedBoat);
+                            mCompassSlide.setBearing(wantedBoat.intValue());
                         }
                     } else if (pair[0].equals("RSA")) {
                         Float value = Float.parseFloat(pair[1]);
@@ -301,16 +334,27 @@ public class DeviceControlActivity extends FragmentActivity
                         {
                             mCOGSlide.setCOG(value.intValue());
                         }
+                    } else if (pair[0].equals("BWR")) { // bearing wanted rudder
+                        String[] whatandwho = pair[1].split("\\.");
+                        if (pebbled && (null != whatandwho[0]) && (null != whatandwho[1])) {
+
+                            int what = Integer.parseInt(whatandwho[0]);
+                            int who = Integer.parseInt(whatandwho[1]);
+
+                            watch_data.addInt32(1, what);
+                            watch_data.addInt32(2, who);
+                        }
                     }
 
 					
                 }
 				nmea_sentence = "";
+
+                PebbleKit.sendDataToPebble(getApplicationContext(), PEBBLE_APP_UUID, watch_data);
 			}
         }
 
     }
-
 
     // Demonstrates how to iterate through the supported GATT Services/Characteristics.
     // In this sample, we populate the data structure that is bound to the ExpandableListView
@@ -321,11 +365,16 @@ public class DeviceControlActivity extends FragmentActivity
         String unknownServiceString = getResources().getString(R.string.unknown_service);
         ArrayList<HashMap<String, String>> gattServiceData = new ArrayList<>();
 
- 
+        UUID HM_RX_TX = UUID.fromString(SampleGattAttributes.HM_RX_TX);
+
         // Loops through available GATT Services.
         for (BluetoothGattService gattService : gattServices) {
             HashMap<String, String> currentServiceData = new HashMap<>();
             uuid = gattService.getUuid().toString();
+
+            String LIST_NAME = "NAME";
+            String LIST_UUID = "UUID";
+
             currentServiceData.put(
                     LIST_NAME, SampleGattAttributes.lookup(uuid, unknownServiceString));
             

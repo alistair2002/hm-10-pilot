@@ -182,8 +182,9 @@ containing a value of this type.
         public static final int gatt_services_characteristics=0x7f040005;
         public static final int layout_setup=0x7f040006;
         public static final int listitem_device=0x7f040007;
-        public static final int rudder=0x7f040008;
-        public static final int sog=0x7f040009;
+        public static final int main=0x7f040008;
+        public static final int rudder=0x7f040009;
+        public static final int sog=0x7f04000a;
     }
     public static final class menu {
         public static final int gatt_services=0x7f0a0000;

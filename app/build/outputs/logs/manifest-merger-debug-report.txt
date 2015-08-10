@@ -81,6 +81,7 @@ MERGED from com.android.support:support-v4:22.2.0:20:5
 MERGED from com.android.support:support-v13:21.0.2:15:5
 MERGED from com.android.support:support-v4:22.2.0:20:5
 MERGED from com.android.support:cardview-v7:21.0.2:15:5
+MERGED from com.getpebble:pebblekit:3.0.0:7:5
 	android:targetSdkVersion
 		INJECTED from AndroidManifest.xml:0:0
 		INJECTED from AndroidManifest.xml:0:0

@@ -30,10 +30,11 @@ public class ScreenSlideCOG extends Fragment {
 
     // Container Activity must implement this interface
     public interface OnFreeboardStringSend {
-        public void onFreeboardString(String freeboardSentence);
+        void onFreeboardString(String freeboardSentence);
     }
 
 	public void setCOG(int value) { textview.setText(String.valueOf(value)); }
+    public void setWanted(String wanted) { wantedBearing.setText( wanted ); }
 
     @Override
     public void onAttach(Activity activity) {

@@ -20,7 +20,7 @@
         <EditText
             android:id="@+id/cog_edit"
             android:textSize="50dp"
-            android:text="0"
+            android:text=""
             android:gravity="left"
             android:textColor="#ffff8534"
             android:layout_height="wrap_content"

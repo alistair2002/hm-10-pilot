@@ -23,10 +23,11 @@ public class ScreenSlideRudder extends Fragment {
 
     // Container Activity must implement this interface
     public interface OnFreeboardStringSend {
-        public void onFreeboardString(String freeboardSentence);
+        void onFreeboardString(String freeboardSentence);
     }
 
 	public void setRudder(int rudder) { textview.setText(String.valueOf(rudder)); }
+	public void setWanted(String wanted) { wantedRudder.setText( wanted ); }
 
 	@Override
 	public void onAttach(Activity activity) {

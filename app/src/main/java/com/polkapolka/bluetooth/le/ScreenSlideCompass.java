@@ -26,10 +26,12 @@ public class ScreenSlideCompass extends Fragment {
 
 	// Container Activity must implement this interface
 	public interface OnFreeboardStringSend {
-		public void onFreeboardString(String freeboardSentence);
+		void onFreeboardString(String freeboardSentence);
 	}
 
 	public void setBearing(int bearing) { textview.setText(String.valueOf(bearing)); }
+	public void setWanted(String wanted) { wantedBearing.setText( wanted ); }
+
 
 	@Override
 	public void onAttach(Activity activity) {
@@ -64,14 +66,12 @@ public class ScreenSlideCompass extends Fragment {
 						if (actionId == EditorInfo.IME_ACTION_SEARCH ||
 								actionId == EditorInfo.IME_ACTION_DONE) {
 							String edited = wantedBearing.getText().toString();
-							if (null != edited) {
-								Integer value = Integer.decode(edited);
-								if (value < 0) value = 0;
-								if (value > 360)
-									value = value % 360;
-								// the user is done typing.
-								mCallback.onFreeboardString("#CWB:" + value + "\r\n");
-							}
+							Integer value = Integer.decode(edited);
+							if (value < 0) value = 0;
+							if (value > 360)
+								value = value % 360;
+							// the user is done typing.
+							mCallback.onFreeboardString("#CWB:" + value + "\r\n");
 						}
 
 

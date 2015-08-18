@@ -19,7 +19,7 @@
 
             <EditText android:id="@+id/rudder_edit"
             android:textSize="50dp"
-            android:text="0"
+            android:text=""
             android:gravity="left"
             android:textColor="#ff09aaff"
             android:layout_height="wrap_content"

@@ -5,12 +5,17 @@
     android:alpha="100"
     android:fillViewport="false">
 
-    <LinearLayout android:orientation="horizontal"
+    <LinearLayout android:orientation="vertical"
         android:layout_gravity="bottom"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="10dp"
         android:weightSum="1">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
@@ -20,6 +25,21 @@
             android:text="kts"
             android:id="@+id/textView"
             android:textColor="#ff65ff0f" />
+
+        <EditText android:id="@+id/edit"
+            android:textSize="20dp"
+            android:text=""
+            android:gravity="right"
+            android:textColor="#ff41a1"
+            android:layout_width="260dp"
+            android:background="@android:color/transparent"
+            android:cursorVisible="true"
+            android:layout_height="wrap_content"
+            android:editable="true"
+            android:inputType="text|textNoSuggestions" />
+
+    </LinearLayout>
+
 
         <TextView android:id="@+id/sog"
             android:text="0"

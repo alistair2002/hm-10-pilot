@@ -55,7 +55,8 @@ import java.util.UUID;
 public class DeviceControlActivity extends FragmentActivity
         implements ScreenSlideCompass.OnFreeboardStringSend,
         ScreenSlideCOG.OnFreeboardStringSend,
-        ScreenSlideRudder.OnFreeboardStringSend {
+        ScreenSlideRudder.OnFreeboardStringSend,
+        ScreenSlideSOG.OnFreeboardStringSend {
     private final static String TAG = DeviceControlActivity.class.getSimpleName();
     private final static UUID PEBBLE_APP_UUID = UUID.fromString("424decad-838a-4ce8-be10-ad5ce75f551a");
 
@@ -66,6 +67,10 @@ public class DeviceControlActivity extends FragmentActivity
     //private String mDeviceName;
     private String mDeviceAddress;
 	private String nmea_sentence;
+
+    // to update the wanted value
+    private int last_wanted_value;
+    private int last_wanted_controller;
 
 	//  private ExpandableListView mGattServicesList;
     private BluetoothLeService mBluetoothLeService;
@@ -280,6 +285,31 @@ public class DeviceControlActivity extends FragmentActivity
         });
     }
 
+	private void control_value_changed( int who, int what, String what_string ) {
+		last_wanted_controller = who;
+		last_wanted_value = what;
+
+		switch (who){
+			case 1: // rudder
+				if (null != mCompassSlide) { mCompassSlide.setWanted(""); }
+				if (null != mRudderSlide) { mRudderSlide.setWanted(what_string); }
+				if (null != mCOGSlide) { mCOGSlide.setWanted(""); }
+				break;
+            case 2: // compass
+                if (null != mCompassSlide) { mCompassSlide.setWanted(what_string); }
+                if (null != mRudderSlide) { mRudderSlide.setWanted(""); }
+                if (null != mCOGSlide) {  mCOGSlide.setWanted(""); }
+                break;
+			case 3: // cog
+				if (null != mCompassSlide) { mCompassSlide.setWanted(""); }
+				if (null != mRudderSlide) { mRudderSlide.setWanted(""); }
+				if (null != mCOGSlide) { mCOGSlide.setWanted(what_string); }
+				break;
+			default:
+				break;
+		}
+	}
+
     private void displayData(String data) {
 
         nmea_sentence += data;
@@ -320,18 +350,28 @@ public class DeviceControlActivity extends FragmentActivity
                         Float value = Float.parseFloat(pair[1]);
                         if (null != mRudderSlide)
                         {
+                            if (pebbled) {
+                                watch_data.addInt32(4, value.intValue());
+                            }
                             mRudderSlide.setRudder(value.intValue());
                         }
 					} else if (pair[0].equals("SOG")) {
                         Float value = Float.parseFloat(pair[1]);
                         if (null != mSOGSlide)
                         {
+                            if (pebbled) {
+                                Float value_ten = value * 10;
+                                watch_data.addInt32(3, value_ten.intValue());
+                            }
                             mSOGSlide.setSOG(value.intValue());
                         }
                     } else if (pair[0].equals("HDW")) {
                         Float value = Float.parseFloat(pair[1]);
                         if (null != mCOGSlide)
                         {
+                            if (pebbled) {
+                                watch_data.addInt32(5, value.intValue());
+                            }
                             mCOGSlide.setCOG(value.intValue());
                         }
                     } else if (pair[0].equals("BWR")) { // bearing wanted rudder
@@ -340,6 +380,11 @@ public class DeviceControlActivity extends FragmentActivity
 
                             int what = Integer.parseInt(whatandwho[0]);
                             int who = Integer.parseInt(whatandwho[1]);
+
+                            if ((who != last_wanted_controller) ||
+                                (what != last_wanted_value)) {
+                                control_value_changed( who, what, whatandwho[0] );
+                            }
 
                             watch_data.addInt32(1, what);
                             watch_data.addInt32(2, who);

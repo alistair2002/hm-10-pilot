@@ -75,6 +75,12 @@ ADDED from AndroidManifest.xml:54:9
 		ADDED from AndroidManifest.xml:56:13
 	android:name
 		ADDED from AndroidManifest.xml:55:13
+service#com.polkapolka.bluetooth.le.DataStoreService
+ADDED from AndroidManifest.xml:58:9
+	android:enabled
+		ADDED from AndroidManifest.xml:60:13
+	android:name
+		ADDED from AndroidManifest.xml:59:13
 uses-sdk
 INJECTED from AndroidManifest.xml:0:0 reason: use-sdk injection requested
 MERGED from com.android.support:support-v4:22.2.0:20:5

@@ -22,6 +22,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v4.app.Fragment;
@@ -50,7 +51,8 @@ public class DeviceControlActivity extends FragmentActivity
 
     public static final String EXTRAS_DEVICE_NAME = "DEVICE_NAME";
     public static final String EXTRAS_DEVICE_ADDRESS = "DEVICE_ADDRESS";
-
+    public static final String PrefStoredFile =  "PilotBLEFile";
+    public static final String PrefStoredDevice = "PilotBLEDevice";
     private String mDeviceAddress;
 
 	//  private ExpandableListView mGattServicesList;
@@ -70,7 +72,6 @@ public class DeviceControlActivity extends FragmentActivity
 
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder service) {
-            Log.d(TAG, "** Binding Bluetooth service");
             mBluetoothLeService = ((BluetoothLeService.LocalBinder) service).getService();
             if (!mBluetoothLeService.initialize()) {
                 Log.e(TAG, "Unable to initialize Bluetooth");
@@ -90,7 +91,6 @@ public class DeviceControlActivity extends FragmentActivity
     private final ServiceConnection mDataStore = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
-            Log.d(TAG, "** Binding Data service");
             mDataStoreService = ((DataStoreService.LocalBinder) service) .getService();
         }
 
@@ -144,12 +144,30 @@ public class DeviceControlActivity extends FragmentActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.gatt_services_characteristics);
 
+        SharedPreferences settings = getSharedPreferences(PrefStoredFile, 0);
+
         final Intent intent = getIntent();
         //mDeviceName = intent.getStringExtra(EXTRAS_DEVICE_NAME);
         mDeviceAddress = intent.getStringExtra(EXTRAS_DEVICE_ADDRESS);
         android.app.FragmentManager fragmentManager = getFragmentManager();
         ViewPager mPager;
         PagerAdapter mPagerAdapter;
+
+        if (null == mDeviceAddress) {
+            Log.d( TAG, "** onCreate null device stored is :" +
+                    settings.getString(PrefStoredDevice, null ));
+            mDeviceAddress = settings.getString(PrefStoredDevice, null );
+        } else {
+            Log.d( TAG, "** onCreate non null :" + mDeviceAddress +
+            " stored " + settings.getString(PrefStoredDevice, null ));
+
+            SharedPreferences.Editor editor = settings.edit();
+            editor.putString(PrefStoredDevice, mDeviceAddress);
+
+            editor.apply();
+        }
+
+        Log.d(TAG, "create mDevice " + mDeviceAddress);
 
         mPager = (ViewPager) findViewById(R.id.pager);
         mPagerAdapter = new ArseSlidePagerAdapter(getSupportFragmentManager());

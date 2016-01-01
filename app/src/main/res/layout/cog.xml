@@ -8,7 +8,7 @@
     <LinearLayout android:orientation="vertical"
         android:layout_gravity="bottom"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:weightSum="1">
 
@@ -19,22 +19,23 @@
 
         <EditText
             android:id="@+id/cog_edit"
-            android:textSize="50dp"
+            android:hint="@string/courseOverGround"
+            android:textSize="50sp"
             android:text=""
-            android:gravity="left"
+            android:gravity="start"
             android:textColor="#ffff8534"
             android:layout_height="wrap_content"
-            android:layout_width="280dp"
+            android:layout_width="280sp"
             android:background="@android:color/transparent"
-            android:clickable="true"
+            android:clickable="false"
             android:inputType="number|numberSigned"
             android:cursorVisible="false" />
 
         <TextView android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="right|end"
+            android:gravity="end"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="cog"
+            android:text="@string/courseOverGround"
             android:id="@+id/textView2"
             android:textColor="#ffff8534" />
 
@@ -42,13 +43,12 @@
 
 
         <TextView android:id="@+id/cog"
-            android:text="0"
-            android:textSize="180dp"
+            android:text="@string/zero"
+            android:textSize="180sp"
             android:textColor="#ffff8534"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="right"
-            android:editable="true"
+            android:gravity="end"
             android:focusable="true" />
 
     </LinearLayout>

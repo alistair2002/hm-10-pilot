@@ -21,7 +21,7 @@ limitations under the License.
 
     <uses-sdk
         android:minSdkVersion="18"
-        android:targetSdkVersion="22" />
+        android:targetSdkVersion="23" />
 
     <!--
     Declare this required feature if you want to make the app available to BLE-capable
@@ -39,6 +39,7 @@ limitations under the License.
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
+        android:allowBackup="false"
         android:icon="@drawable/atalanta_brochure4"
         android:label="@string/app_name"
         android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >

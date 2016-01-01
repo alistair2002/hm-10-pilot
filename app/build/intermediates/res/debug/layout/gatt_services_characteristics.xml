@@ -17,7 +17,9 @@ limitations under the License.
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	android:keepScreenOn="true">
+	android:keepScreenOn="true"
+	android:descendantFocusability="beforeDescendants"
+	android:focusableInTouchMode="true">
 
   <!-- whole screen image -->
   <ImageView 	android:layout_width="match_parent"
@@ -45,7 +47,8 @@ limitations under the License.
 			  android:id="@+id/imageButton"
 			  android:src="@drawable/nemu_small"
 			  android:onClick="menuImageSelect"
-			  android:clickable="true" />
+			  android:clickable="true"
+			  android:contentDescription="@string/button"/>
 
 		  <TextView   android:id="@+id/connection_state"
 			  android:gravity="end"

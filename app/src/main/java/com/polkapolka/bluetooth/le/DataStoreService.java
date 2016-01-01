@@ -66,6 +66,7 @@ public class DataStoreService extends Service {
 
     public boolean onUnbind(Intent intent) {
 
+        unbindService(mServiceConnection);
         unregisterReceiver(mGattUpdateReceiver);
         unregisterReceiver(pebbleDataReceiver);
         return super.onUnbind(intent);
@@ -100,6 +101,7 @@ public class DataStoreService extends Service {
         registerReceiver(mGattUpdateReceiver, makeGattUpdateIntentFilter());
         return mBinder;
     }
+
 
     private static IntentFilter makeGattUpdateIntentFilter() {
         final IntentFilter intentFilter = new IntentFilter();
@@ -201,43 +203,47 @@ public class DataStoreService extends Service {
 
                 for (String pair1 : pairs) {
                     String[] pair = pair1.split(":");
+                    Float value;
 
-                    if (pair[0].equals("HDM")) {
+                    switch (pair[0]) {
+                        case "HDM":
+                            value = Float.parseFloat(pair[1]);
+                            watch_data.addInt32(0, value.intValue());
+                            nmea_hdm = value;
+                            break;
 
-                        Float wantedBoat = Float.parseFloat(pair[1]);
-                        watch_data.addInt32(0, wantedBoat.intValue());
-                        nmea_hdm = wantedBoat;
+                        case "RSA":
+                            value = Float.parseFloat(pair[1]);
+                            watch_data.addInt32(4, value.intValue());
+                            nmea_rsa = value;
+                            break;
 
-                    } else if (pair[0].equals("RSA")) {
+                        case "SOG":
+                            value = Float.parseFloat(pair[1]);
+                            watch_data.addInt32(4, value.intValue());
+                            nmea_sog = value;
+                            break;
 
-                        Float value = Float.parseFloat(pair[1]);
-                        watch_data.addInt32(4, value.intValue());
-                        nmea_rsa = value;
+                        case "HDW":
+                            value = Float.parseFloat(pair[1]);
+                            watch_data.addInt32(4, value.intValue());
+                            nmea_hdw = value;
+                            break;
 
-                    } else if (pair[0].equals("SOG")) {
+                        case "BWR":
+                            String[] whatandwho = pair[1].split("\\.");
+                            if ((null != whatandwho[0]) && (null != whatandwho[1])) {
 
-                        Float value = Float.parseFloat(pair[1]);
-                        watch_data.addInt32(4, value.intValue());
-                        nmea_sog = value;
+                                nmea_bwr_what = Integer.parseInt(whatandwho[0]);
+                                nmea_bwr_who = Integer.parseInt(whatandwho[1]);
 
-                    } else if (pair[0].equals("HDW")) {
-
-                        Float value = Float.parseFloat(pair[1]);
-                        watch_data.addInt32(4, value.intValue());
-
-                        nmea_hdw = value;
-
-                    } else if (pair[0].equals("BWR")) { // bearing wanted rudder
-
-                        String[] whatandwho = pair[1].split("\\.");
-                        if ((null != whatandwho[0]) && (null != whatandwho[1])) {
-
-                            nmea_bwr_what = Integer.parseInt(whatandwho[0]);
-                            nmea_bwr_who = Integer.parseInt(whatandwho[1]);
-
-                            watch_data.addInt32(1, nmea_bwr_what);
-                            watch_data.addInt32(2, nmea_bwr_who);
-                        }
+                                watch_data.addInt32(1, nmea_bwr_what);
+                                watch_data.addInt32(2, nmea_bwr_who);
+                            }
+                            break;
+                        default:
+                            Log.d(TAG, "unknown option " + pair[0]);
+                            break;
                     }
                 }
                 nmea_sentence = "";

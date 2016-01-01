@@ -8,7 +8,7 @@
     <LinearLayout android:orientation="vertical"
         android:layout_gravity="bottom"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:weightSum="1">
 
@@ -20,35 +20,34 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="right"
-            android:textSize="50dp"
+            android:gravity="end"
+            android:textSize="50sp"
             android:text="kts"
             android:id="@+id/textView"
             android:textColor="#ff65ff0f" />
 
         <EditText android:id="@+id/edit"
-            android:textSize="20dp"
+            android:labelFor="@+id/textView"
+            android:textSize="20sp"
             android:text=""
-            android:gravity="right"
+            android:gravity="end"
             android:textColor="#ff41a1"
-            android:layout_width="260dp"
+            android:layout_width="260sp"
             android:background="@android:color/transparent"
             android:cursorVisible="true"
             android:layout_height="wrap_content"
-            android:editable="true"
             android:inputType="text|textNoSuggestions" />
 
     </LinearLayout>
 
 
         <TextView android:id="@+id/sog"
-            android:text="0"
-            android:textSize="200dp"
+            android:text="@string/zero"
+            android:textSize="200sp"
             android:textColor="#ff65ff0f"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="right"
-            android:editable="true"
+            android:gravity="end"
             android:focusable="true" />
 
     </LinearLayout>

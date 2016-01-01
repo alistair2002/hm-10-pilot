@@ -8,7 +8,7 @@
     <LinearLayout android:orientation="vertical"
         android:layout_gravity="bottom"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:weightSum="1">
 
@@ -19,14 +19,15 @@
                         android:orientation="horizontal">
 
             <EditText android:id="@+id/bearing_edit"
-            android:textSize="50dp"
+                android:hint="@string/compass"
+            android:textSize="50sp"
             android:text=""
-            android:gravity="left"
+            android:gravity="start"
             android:textColor="#ffff8e13"
             android:layout_height="wrap_content"
             android:layout_width="280dp"
             android:background="@android:color/transparent"
-            android:clickable="true"
+            android:clickable="false"
             android:inputType="number"
             android:cursorVisible="false"/>
 
@@ -34,19 +35,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="compass"
+                android:text="@string/compass"
                 android:id="@+id/textView2"
                 android:textColor="#ffff8e13"
-                android:gravity="right|end" />
+                android:gravity="end" />
         </LinearLayout>
 
         <TextView android:id="@+id/bearing"
-            android:text="0"
-            android:textSize="180dp"
+            android:text="@string/zero"
+            android:textSize="180sp"
             android:textColor="#ffff8e13"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="right"/>
+            android:gravity="end"/>
     </LinearLayout>
 
 </ScrollView>

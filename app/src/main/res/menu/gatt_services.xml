@@ -17,7 +17,7 @@
     <item android:id="@+id/pid_off"
         android:title="autopilot off"
         android:orderInCategory="2"
-        android:showAsAction="always"/>
+        android:showAsAction="ifRoom"/>
     <item android:id="@+id/menu_connect"
           android:title="@string/menu_connect"
           android:orderInCategory="100"
@@ -29,7 +29,7 @@
     <item android:id="@+id/menu_rescan"
         android:title="rescan"
         android:orderInCategory="2"
-        android:showAsAction="always"/>
+        android:showAsAction="ifRoom"/>
     <item android:id="@+id/bubble_off"
         android:title="bubble off"
         android:orderInCategory="3"
@@ -37,15 +37,15 @@
     <item android:id="@+id/bubble_compass"
         android:title="bubble compass"
         android:orderInCategory="3"
-        android:showAsAction="always"/>
+        android:showAsAction="ifRoom"/>
     <item android:id="@+id/bubble_cog"
         android:title="bubble COG"
         android:orderInCategory="3"
-        android:showAsAction="always"/>
+        android:showAsAction="ifRoom"/>
     <item android:id="@+id/bubble_amp"
         android:title="bubble amp"
         android:orderInCategory="3"
-        android:showAsAction="always"/>
+        android:showAsAction="ifRoom"/>
     <item android:id="@+id/menu_refresh"
         android:title="refresh"
         android:checkable="false"

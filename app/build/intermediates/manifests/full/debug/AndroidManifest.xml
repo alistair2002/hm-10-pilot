@@ -20,7 +20,7 @@ limitations under the License.
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="18"
+        android:minSdkVersion="21"
         android:targetSdkVersion="23" />
 
     <!--
@@ -39,9 +39,11 @@ limitations under the License.
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
+        android:name="com.android.tools.fd.runtime.BootstrapApplication"
         android:allowBackup="false"
         android:icon="@drawable/atalanta_brochure4"
         android:label="@string/app_name"
+        android:supportsRtl="false"
         android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
         <activity
             android:name="com.polkapolka.bluetooth.le.DeviceControlActivity"

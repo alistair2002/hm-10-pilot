@@ -8,9 +8,6 @@
 package com.polkapolka.bluetooth.le;
 
 public final class R {
-    public static final class array {
-        public static final int roygbiv=0x7f060000;
-    }
     public static final class attr {
         /** <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
 "<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
@@ -119,125 +116,96 @@ containing a value of this type.
         public static final int contentPaddingTop=0x7f010009;
     }
     public static final class color {
-        public static final int cardview_dark_background=0x7f070000;
-        public static final int cardview_light_background=0x7f070001;
-        public static final int cardview_shadow_end_color=0x7f070002;
-        public static final int cardview_shadow_start_color=0x7f070003;
+        public static final int cardview_dark_background=0x7f040000;
+        public static final int cardview_light_background=0x7f040001;
+        public static final int cardview_shadow_end_color=0x7f040002;
+        public static final int cardview_shadow_start_color=0x7f040003;
     }
     public static final class dimen {
-        public static final int activity_horizontal_margin=0x7f050000;
-        public static final int activity_vertical_margin=0x7f050001;
-        public static final int cardview_compat_inset_shadow=0x7f050002;
-        public static final int cardview_default_elevation=0x7f050003;
-        public static final int cardview_default_radius=0x7f050004;
+        public static final int cardview_compat_inset_shadow=0x7f050000;
+        public static final int cardview_default_elevation=0x7f050001;
+        public static final int cardview_default_radius=0x7f050002;
     }
     public static final class drawable {
-        public static final int atalanta_brochure3=0x7f020000;
-        public static final int atalanta_brochure4=0x7f020001;
-        public static final int atalanta_brochure5=0x7f020002;
-        public static final int atalanta_brocure1=0x7f020003;
-        public static final int atalata_brochure2=0x7f020004;
-        public static final int corsair_compass_rose=0x7f020005;
-        public static final int mary_small=0x7f020006;
-        public static final int nemu_small=0x7f020007;
+        public static final int atalanta_brochure4=0x7f020000;
+        public static final int atalanta_brochure5=0x7f020001;
+        public static final int atalanta_brocure1=0x7f020002;
+        public static final int atalata_brochure2=0x7f020003;
+        public static final int corsair_compass_rose=0x7f020004;
+        public static final int mary_small=0x7f020005;
+        public static final int nemu_small=0x7f020006;
     }
     public static final class id {
-        public static final int bearing=0x7f0b0005;
-        public static final int bearing_edit=0x7f0b0003;
-        public static final int boat=0x7f0b0009;
-        public static final int bubble_amp=0x7f0b001b;
-        public static final int bubble_cog=0x7f0b001a;
-        public static final int bubble_compass=0x7f0b0019;
-        public static final int bubble_off=0x7f0b0018;
-        public static final int cog=0x7f0b0007;
-        public static final int cog_edit=0x7f0b0006;
-        public static final int compass=0x7f0b0008;
-        public static final int compassActivity=0x7f0b000c;
-        public static final int connection_state=0x7f0b000b;
-        public static final int device_address=0x7f0b000e;
-        public static final int device_name=0x7f0b000f;
-        public static final int edit=0x7f0b0012;
-        public static final int editText=0x7f0b0001;
-        public static final int fragment=0x7f0b0002;
-        public static final int imageButton=0x7f0b000a;
-        public static final int menu_connect=0x7f0b0015;
-        public static final int menu_disconnect=0x7f0b0016;
-        public static final int menu_refresh=0x7f0b001c;
-        public static final int menu_rescan=0x7f0b0017;
-        public static final int menu_scan=0x7f0b001d;
-        public static final int menu_stop=0x7f0b001e;
-        public static final int pager=0x7f0b000d;
-        public static final int pid_off=0x7f0b0014;
-        public static final int rudder=0x7f0b0011;
-        public static final int rudder_edit=0x7f0b0010;
-        public static final int sog=0x7f0b0013;
-        public static final int textView=0x7f0b0000;
-        public static final int textView2=0x7f0b0004;
+        public static final int bearing=0x7f090004;
+        public static final int bearing_edit=0x7f090002;
+        public static final int boat=0x7f090008;
+        public static final int bubble_amp=0x7f09001a;
+        public static final int bubble_cog=0x7f090019;
+        public static final int bubble_compass=0x7f090018;
+        public static final int bubble_off=0x7f090017;
+        public static final int cog=0x7f090006;
+        public static final int cog_edit=0x7f090005;
+        public static final int compass=0x7f090007;
+        public static final int compassActivity=0x7f09000b;
+        public static final int connection_state=0x7f09000a;
+        public static final int device_address=0x7f09000e;
+        public static final int device_name=0x7f09000d;
+        public static final int edit=0x7f090011;
+        public static final int editText=0x7f090001;
+        public static final int imageButton=0x7f090009;
+        public static final int menu_connect=0x7f090014;
+        public static final int menu_disconnect=0x7f090015;
+        public static final int menu_refresh=0x7f09001b;
+        public static final int menu_rescan=0x7f090016;
+        public static final int menu_scan=0x7f09001c;
+        public static final int menu_stop=0x7f09001d;
+        public static final int pager=0x7f09000c;
+        public static final int pid_off=0x7f090013;
+        public static final int rudder=0x7f090010;
+        public static final int rudder_edit=0x7f09000f;
+        public static final int sog=0x7f090012;
+        public static final int textView=0x7f090000;
+        public static final int textView2=0x7f090003;
     }
     public static final class layout {
-        public static final int actionbar_indeterminate_progress=0x7f040000;
-        public static final int activity_compass=0x7f040001;
-        public static final int bearing=0x7f040002;
-        public static final int cog=0x7f040003;
-        public static final int fragment_compass=0x7f040004;
-        public static final int gatt_services_characteristics=0x7f040005;
-        public static final int layout_setup=0x7f040006;
-        public static final int listitem_device=0x7f040007;
-        public static final int main=0x7f040008;
-        public static final int rudder=0x7f040009;
-        public static final int sog=0x7f04000a;
+        public static final int actionbar_indeterminate_progress=0x7f030000;
+        public static final int bearing=0x7f030001;
+        public static final int cog=0x7f030002;
+        public static final int fragment_compass=0x7f030003;
+        public static final int gatt_services_characteristics=0x7f030004;
+        public static final int listitem_device=0x7f030005;
+        public static final int main=0x7f030006;
+        public static final int rudder=0x7f030007;
+        public static final int sog=0x7f030008;
     }
     public static final class menu {
-        public static final int gatt_services=0x7f0a0000;
-        public static final int main=0x7f0a0001;
-    }
-    public static final class mipmap {
-        public static final int atalanta_brochure3=0x7f030000;
-        public static final int atalanta_brochure4=0x7f030001;
-        public static final int atalanta_brochure5=0x7f030002;
-        public static final int compass=0x7f030003;
-        public static final int corsair_compass_rose=0x7f030004;
-        public static final int ic_launcher=0x7f030005;
-        public static final int mary=0x7f030006;
-        public static final int mary_small=0x7f030007;
+        public static final int gatt_services=0x7f080000;
+        public static final int main=0x7f080001;
     }
     public static final class string {
-        public static final int action_settings=0x7f080000;
-        public static final int app_name=0x7f080001;
-        public static final int background_image=0x7f080002;
-        public static final int ble_not_supported=0x7f080003;
-        public static final int blue_slide=0x7f080004;
-        public static final int button=0x7f080005;
-        public static final int compass=0x7f080006;
-        public static final int compass_boat=0x7f080007;
-        public static final int compass_rose=0x7f080008;
-        public static final int connected=0x7f080009;
-        public static final int courseOverGround=0x7f08000a;
-        public static final int disconnected=0x7f08000b;
-        public static final int error_bluetooth_not_supported=0x7f08000c;
-        public static final int green_slide=0x7f08000d;
-        public static final int hello_world=0x7f08000e;
-        public static final int is_serial=0x7f08000f;
-        public static final int label_data=0x7f080010;
-        public static final int label_device_address=0x7f080011;
-        public static final int label_state=0x7f080012;
-        public static final int menu_connect=0x7f080013;
-        public static final int menu_disconnect=0x7f080014;
-        public static final int menu_scan=0x7f080015;
-        public static final int menu_stop=0x7f080016;
-        public static final int no_data=0x7f080017;
-        public static final int red_slide=0x7f080018;
-        public static final int title_activity_compass=0x7f080019;
-        public static final int title_devices=0x7f08001a;
-        public static final int unknown_characteristic=0x7f08001b;
-        public static final int unknown_device=0x7f08001c;
-        public static final int unknown_service=0x7f08001d;
-        public static final int zero=0x7f08001e;
+        public static final int app_name=0x7f060000;
+        public static final int background_image=0x7f060001;
+        public static final int ble_not_supported=0x7f060002;
+        public static final int button=0x7f060003;
+        public static final int compass=0x7f060004;
+        public static final int compass_boat=0x7f060005;
+        public static final int compass_rose=0x7f060006;
+        public static final int connected=0x7f060007;
+        public static final int courseOverGround=0x7f060008;
+        public static final int disconnected=0x7f060009;
+        public static final int error_bluetooth_not_supported=0x7f06000a;
+        public static final int label_device_address=0x7f06000b;
+        public static final int menu_connect=0x7f06000c;
+        public static final int menu_disconnect=0x7f06000d;
+        public static final int menu_scan=0x7f06000e;
+        public static final int menu_stop=0x7f06000f;
+        public static final int unknown_device=0x7f060010;
+        public static final int zero=0x7f060011;
     }
     public static final class style {
-        public static final int CardView=0x7f090000;
-        public static final int CardView_Dark=0x7f090001;
-        public static final int CardView_Light=0x7f090002;
+        public static final int CardView=0x7f070000;
+        public static final int CardView_Dark=0x7f070001;
+        public static final int CardView_Light=0x7f070002;
     }
     public static final class styleable {
         /** Attributes that can be used with a CardView.

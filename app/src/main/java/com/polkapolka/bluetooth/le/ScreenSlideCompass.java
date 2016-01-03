@@ -1,10 +1,16 @@
 package com.polkapolka.bluetooth.le;
 
+
 /**
- * Created by jason on 13/07/15.
+ * This code is inherited from the work of the the freeboard project
+ * http://www.42.co.nz/freeboard/
+ * and the HM10 bluetooth low energy module project
+ * http://jnhuamao.cn/
+ * Please acknowledge its origins if re-using it.  I add that any re-use is done so at your own risk etc..
  */
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -19,8 +25,7 @@ import android.widget.TextView;
 //Widgets used
 
 public class ScreenSlideCompass extends Fragment {
-	OnFreeboardStringSend mCallback;
-    private final static String TAG = ScreenSlideCompass.class.getSimpleName();
+	private OnFreeboardStringSend mCallback;
 	private TextView textview;
 	private EditText wantedBearing;
 
@@ -34,16 +39,20 @@ public class ScreenSlideCompass extends Fragment {
 
 
 	@Override
-	public void onAttach(Activity activity) {
-		super.onAttach(activity);
+	public void onAttach(Context context) {
+		super.onAttach(context);
+		Activity activity;
 
-		// This makes sure that the container activity has implemented
-		// the callback interface. If not, it throws an exception
-		try {
-			mCallback = (OnFreeboardStringSend) activity;
-		} catch (ClassCastException e) {
-			throw new ClassCastException(activity.toString()
-										 + " must implement OnFreeboardStringSend");
+		if (context instanceof Activity){
+			activity=(Activity) context;
+			// This makes sure that the container activity has implemented
+			// the callback interface. If not, it throws an exception
+			try {
+				mCallback = (OnFreeboardStringSend) activity;
+			} catch (ClassCastException e) {
+				throw new ClassCastException(activity.toString()
+						+ " must implement OnFreeboardStringSend");
+			}
 		}
 	}
 

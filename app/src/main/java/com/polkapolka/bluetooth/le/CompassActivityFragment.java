@@ -39,8 +39,8 @@ public class CompassActivityFragment extends Fragment
 	// do we need all of these?
 	private float[] mLastAccelerometer = new float[3];
     private float[] mLastMagnetometer = new float[3];
-    private float[] mR = new float[9];
-    private float[] mOrientation = new float[3];
+    private final float[] mR = new float[9];
+    private final float[] mOrientation = new float[3];
     //private float mCurrentDegree = 0f;
 
     public CompassActivityFragment() {

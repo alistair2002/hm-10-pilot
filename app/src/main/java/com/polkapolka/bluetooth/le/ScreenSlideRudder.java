@@ -1,6 +1,7 @@
 package com.polkapolka.bluetooth.le;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,12 +14,16 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 /**
- * Created by jason on 13/07/15.
+ * This code is inherited from the work of the the freeboard project
+ * http://www.42.co.nz/freeboard/
+ * and the HM10 bluetooth low energy module project
+ * http://jnhuamao.cn/
+ * Please acknowledge its origins if re-using it.  I add that any re-use is done so at your own risk etc..
  */
+
 public class ScreenSlideRudder extends Fragment {
-    OnFreeboardStringSend mCallback;
-    private final static String TAG = ScreenSlideRudder.class.getSimpleName();
-    private TextView textview;
+    private OnFreeboardStringSend mCallback;
+	private TextView textview;
 	private EditText wantedRudder;
 
     // Container Activity must implement this interface
@@ -29,17 +34,22 @@ public class ScreenSlideRudder extends Fragment {
 	public void setRudder(int rudder) { textview.setText(String.valueOf(rudder)); }
 	public void setWanted(String wanted) { wantedRudder.setText( wanted ); }
 
-	@Override
-	public void onAttach(Activity activity) {
-		super.onAttach(activity);
 
-		// This makes sure that the container activity has implemented
-		// the callback interface. If not, it throws an exception
-		try {
-			mCallback = (OnFreeboardStringSend) activity;
-		} catch (ClassCastException e) {
-			throw new ClassCastException(activity.toString()
-										 + " must implement OnFreeboardStringSend");
+	@Override
+	public void onAttach(Context context) {
+		super.onAttach(context);
+		Activity activity;
+
+		if (context instanceof Activity){
+			activity=(Activity) context;
+			// This makes sure that the container activity has implemented
+			// the callback interface. If not, it throws an exception
+			try {
+				mCallback = (OnFreeboardStringSend) activity;
+			} catch (ClassCastException e) {
+				throw new ClassCastException(activity.toString()
+						+ " must implement OnFreeboardStringSend");
+			}
 		}
 	}
 	

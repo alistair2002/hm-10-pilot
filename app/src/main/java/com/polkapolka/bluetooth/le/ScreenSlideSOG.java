@@ -9,6 +9,7 @@ package com.polkapolka.bluetooth.le;
  */
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -23,8 +24,7 @@ import android.widget.TextView;
 //Widgets used
 
 public class ScreenSlideSOG extends Fragment {
-    OnFreeboardStringSend mCallback;
-    private final static String TAG = ScreenSlideRudder.class.getSimpleName();
+    private OnFreeboardStringSend mCallback;
     private TextView textview;
     private EditText wantedEdit;
 
@@ -35,17 +35,22 @@ public class ScreenSlideSOG extends Fragment {
 
 	public void setSOG(int value) { textview.setText(String.valueOf(value)); }
 
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
 
-        // This makes sure that the container activity has implemented
-        // the callback interface. If not, it throws an exception
-        try {
-            mCallback = (OnFreeboardStringSend) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement OnFreeboardStringSend");
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        Activity activity;
+
+        if (context instanceof Activity){
+            activity=(Activity) context;
+            // This makes sure that the container activity has implemented
+            // the callback interface. If not, it throws an exception
+            try {
+                mCallback = (OnFreeboardStringSend) activity;
+            } catch (ClassCastException e) {
+                throw new ClassCastException(activity.toString()
+                        + " must implement OnFreeboardStringSend");
+            }
         }
     }
 

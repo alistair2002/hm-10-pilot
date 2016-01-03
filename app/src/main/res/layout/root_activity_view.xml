@@ -45,7 +45,7 @@ limitations under the License.
 			  android:layout_width="30dp"
 			  android:layout_height="30dp"
 			  android:id="@+id/imageButton"
-			  android:src="@drawable/nemu_small"
+			  android:src="@drawable/menu_small"
 			  android:onClick="menuImageSelect"
 			  android:clickable="true"
 			  android:contentDescription="@string/button"/>
@@ -74,4 +74,3 @@ limitations under the License.
 		android:layout_height="match_parent"/>
   </LinearLayout>
 </RelativeLayout>
-<!-- From: file:/home/jason/StudioProjects/hm-10-pilot/app/src/main/res/layout/gatt_services_characteristics.xml -->

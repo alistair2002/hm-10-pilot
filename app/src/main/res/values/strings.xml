@@ -16,7 +16,6 @@
 <resources>
     <string name="app_name">Blue Light</string>
     <string name="ble_not_supported">BLE is not supported</string>
-    <string name="label_device_address">Device address:</string>
     <string name="connected">Connected</string>
     <string name="disconnected">Disconnected</string>
     <string name="error_bluetooth_not_supported">Bluetooth not supported.</string>

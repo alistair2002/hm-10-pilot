@@ -129,11 +129,10 @@ containing a value of this type.
     public static final class drawable {
         public static final int atalanta_brochure4=0x7f020000;
         public static final int atalanta_brochure5=0x7f020001;
-        public static final int atalanta_brocure1=0x7f020002;
-        public static final int atalata_brochure2=0x7f020003;
-        public static final int corsair_compass_rose=0x7f020004;
-        public static final int mary_small=0x7f020005;
-        public static final int nemu_small=0x7f020006;
+        public static final int atalata_brochure2=0x7f020002;
+        public static final int corsair_compass_rose=0x7f020003;
+        public static final int mary_small=0x7f020004;
+        public static final int menu_small=0x7f020005;
     }
     public static final class id {
         public static final int bearing=0x7f090004;
@@ -146,20 +145,20 @@ containing a value of this type.
         public static final int cog=0x7f090006;
         public static final int cog_edit=0x7f090005;
         public static final int compass=0x7f090007;
-        public static final int compassActivity=0x7f09000b;
-        public static final int connection_state=0x7f09000a;
-        public static final int device_address=0x7f09000e;
-        public static final int device_name=0x7f09000d;
+        public static final int compassActivity=0x7f09000d;
+        public static final int connection_state=0x7f09000c;
+        public static final int device_address=0x7f09000a;
+        public static final int device_name=0x7f090009;
         public static final int edit=0x7f090011;
         public static final int editText=0x7f090001;
-        public static final int imageButton=0x7f090009;
+        public static final int imageButton=0x7f09000b;
         public static final int menu_connect=0x7f090014;
         public static final int menu_disconnect=0x7f090015;
         public static final int menu_refresh=0x7f09001b;
         public static final int menu_rescan=0x7f090016;
         public static final int menu_scan=0x7f09001c;
         public static final int menu_stop=0x7f09001d;
-        public static final int pager=0x7f09000c;
+        public static final int pager=0x7f09000e;
         public static final int pid_off=0x7f090013;
         public static final int rudder=0x7f090010;
         public static final int rudder_edit=0x7f09000f;
@@ -172,9 +171,9 @@ containing a value of this type.
         public static final int bearing=0x7f030001;
         public static final int cog=0x7f030002;
         public static final int fragment_compass=0x7f030003;
-        public static final int gatt_services_characteristics=0x7f030004;
-        public static final int listitem_device=0x7f030005;
-        public static final int main=0x7f030006;
+        public static final int listitem_device=0x7f030004;
+        public static final int main=0x7f030005;
+        public static final int root_activity_view=0x7f030006;
         public static final int rudder=0x7f030007;
         public static final int sog=0x7f030008;
     }
@@ -194,13 +193,12 @@ containing a value of this type.
         public static final int courseOverGround=0x7f060008;
         public static final int disconnected=0x7f060009;
         public static final int error_bluetooth_not_supported=0x7f06000a;
-        public static final int label_device_address=0x7f06000b;
-        public static final int menu_connect=0x7f06000c;
-        public static final int menu_disconnect=0x7f06000d;
-        public static final int menu_scan=0x7f06000e;
-        public static final int menu_stop=0x7f06000f;
-        public static final int unknown_device=0x7f060010;
-        public static final int zero=0x7f060011;
+        public static final int menu_connect=0x7f06000b;
+        public static final int menu_disconnect=0x7f06000c;
+        public static final int menu_scan=0x7f06000d;
+        public static final int menu_stop=0x7f06000e;
+        public static final int unknown_device=0x7f06000f;
+        public static final int zero=0x7f060010;
     }
     public static final class style {
         public static final int CardView=0x7f070000;

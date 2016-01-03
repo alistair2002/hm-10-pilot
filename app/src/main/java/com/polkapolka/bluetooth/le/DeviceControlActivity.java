@@ -51,8 +51,8 @@ public class DeviceControlActivity extends FragmentActivity
 
     public static final String EXTRAS_DEVICE_NAME = "DEVICE_NAME";
     public static final String EXTRAS_DEVICE_ADDRESS = "DEVICE_ADDRESS";
-    public static final String PrefStoredFile =  "PilotBLEFile";
-    public static final String PrefStoredDevice = "PilotBLEDevice";
+    private static final String PrefStoredFile =  "PilotBLEFile";
+    private static final String PrefStoredDevice = "PilotBLEDevice";
     private String mDeviceAddress;
 
 	//  private ExpandableListView mGattServicesList;
@@ -73,12 +73,14 @@ public class DeviceControlActivity extends FragmentActivity
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder service) {
             mBluetoothLeService = ((BluetoothLeService.LocalBinder) service).getService();
-            if (!mBluetoothLeService.initialize()) {
+            if (mBluetoothLeService.initialize()) {
+                // Automatically connects to the device upon successful start-up initialization.
+                mBluetoothLeService.connect(mDeviceAddress);
+
+            } else {
                 Log.e(TAG, "Unable to initialize Bluetooth");
                 finish();
             }
-            // Automatically connects to the device upon successful start-up initialization.
-            mBluetoothLeService.connect(mDeviceAddress);
         }
 
         @Override
@@ -131,7 +133,7 @@ public class DeviceControlActivity extends FragmentActivity
         openOptionsMenu();
     }
 
-    public void setConnectionState(int resourceId)
+    private void setConnectionState(int resourceId)
     {
         mConnectionState.setText(resourceId);
     }
@@ -142,7 +144,7 @@ public class DeviceControlActivity extends FragmentActivity
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.gatt_services_characteristics);
+        setContentView(R.layout.root_activity_view);
 
         SharedPreferences settings = getSharedPreferences(PrefStoredFile, 0);
 
